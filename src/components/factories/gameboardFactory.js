@@ -10,6 +10,7 @@ class Gameboard {
 	}
 	receiveShot(location) {
 		this.board[location].isShot = true;
+		// return true for hit, false for miss
 		return this.board[location].hasShip;
 	}
 	placeShip(location, length, axis) {

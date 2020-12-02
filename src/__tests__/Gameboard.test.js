@@ -62,8 +62,8 @@ describe('Gameboard functions', () => {
 		arr[23] = 'hit';
 		arr[79] = 'miss';
 		testBoard.placeShip(22, 3, 'x');
-		testBoard.receiveShot(79);
 		testBoard.receiveShot(23);
+		testBoard.receiveShot(79);
 		expect(testBoard.opponentBoard()).toEqual(arr);
 	});
 });
