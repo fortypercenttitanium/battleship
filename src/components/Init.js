@@ -6,19 +6,16 @@ function Init(props) {
 	const [name, setName] = useState('');
 	const [error, setError] = useState('');
 	const handleChange = (e) => {
-		console.log('hit');
 		setName(e.target.value);
 	};
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		setName(name.trim());
-
 		if (!name.trim()) {
 			setError('Name required');
 			return;
 		} else {
 			setError('');
-			console.log('all good');
 		}
 		// const human = new Player(e.target.value);
 		// const computer = new Player('Computer');
