@@ -2,13 +2,10 @@ import React, { useState, useEffect } from 'react';
 import Init from './Init';
 import GameSetup from './GameSetup';
 import GameStart from './GameStart';
-import Gameboard from './factories/gameboardFactory';
-import Ship from './factories/shipFactory';
 import { MainWindow } from './styled_components/gameControllerStyles';
 
-export default function GameController() {
-	const [timeline, setTimeline] = useState('init');
-	const [turn, setTurn] = useState(1);
+export default function GameController({ timeline, setTimeline }) {
+	const [turn, setTurn] = useState(0);
 	const [players, setPlayers] = useState([]);
 	const [dismount, setDismount] = useState(false);
 
@@ -25,7 +22,12 @@ export default function GameController() {
 				setDismount={setDismountProp}
 			/>
 		) : timeline === 'setup' ? (
-			<GameSetup setTimeline={setTimeline} />
+			<GameSetup
+				setTimeline={setTimeline}
+				players={players}
+				dismount={dismount}
+				setDismount={setDismountProp}
+			/>
 		) : (
 			<GameStart setTimeline={setTimeline} />
 		);

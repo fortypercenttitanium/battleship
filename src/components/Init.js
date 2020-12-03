@@ -5,8 +5,7 @@ import {
 	PlayerForm,
 } from './styled_components/gameControllerStyles';
 
-function Init(props) {
-	const { setPlayers, setTimeline, setDismount, dismount } = props;
+function Init({ setPlayers, setTimeline, setDismount, dismount }) {
 	const [name, setName] = useState('');
 	const [error, setError] = useState('');
 	const handleChange = (e) => {
@@ -28,7 +27,7 @@ function Init(props) {
 		setPlayers([human, computer]);
 		setDismount(true);
 	};
-	const animationEnd = () => {
+	const handleAnimationEnd = () => {
 		if (dismount) setTimeline('setup');
 	};
 	return (
@@ -36,7 +35,7 @@ function Init(props) {
 			<PlayerForm
 				style={{ animation: dismount ? 'fadeout 1.5s' : 'fadein 6s ease-in' }}
 				onSubmit={handleSubmit}
-				onAnimationEnd={animationEnd}
+				onAnimationEnd={handleAnimationEnd}
 			>
 				<label htmlFor='name'>Enter player name:</label>
 				<input
@@ -45,6 +44,7 @@ function Init(props) {
 					id='name'
 					placeholder='Battleship combatant'
 					onChange={handleChange}
+					autoComplete='off'
 					value={name}
 				></input>
 				<p style={{ color: 'red' }}>{error}</p>

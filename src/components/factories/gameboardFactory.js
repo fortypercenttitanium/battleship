@@ -8,20 +8,17 @@ class Gameboard {
 			this.board.push({ hasShip: false, isShot: false });
 		}
 	}
+	getBoard() {
+		return this.board;
+	}
 	receiveShot(location) {
 		this.board[location].isShot = true;
 		// return true for hit, false for miss
 		return this.board[location].hasShip;
 	}
-	placeShip(location, length, axis) {
+	checkCollisions(locationArray) {
 		// on x axis, if a ship shares this cell with the next, there is a wall collision
 		const collisions = [9, 19, 29, 39, 49, 59, 69, 79, 89];
-		const locationArray = [];
-		for (let i = 0; i < length; i++) {
-			axis === 'x'
-				? locationArray.push(location + i)
-				: locationArray.push(location + i * 10);
-		}
 		if (locationArray.some((loc) => !this.board[loc])) {
 			// check if ship placement exceeds board boundaries, which covers y axis
 			return false;
@@ -38,8 +35,21 @@ class Gameboard {
 		) {
 			return false;
 		} else {
+			return true;
+		}
+	}
+	placeShip(location, length, axis) {
+		const locationArray = [];
+		for (let i = 0; i < length; i++) {
+			axis === 'x'
+				? locationArray.push(location + i)
+				: locationArray.push(location + i * 10);
+		}
+		if (this.checkCollisions(locationArray)) {
 			locationArray.forEach((loc) => (this.board[loc].hasShip = true));
 			return true;
+		} else {
+			return false;
 		}
 	}
 	opponentBoard() {

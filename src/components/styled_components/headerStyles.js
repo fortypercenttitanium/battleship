@@ -9,6 +9,7 @@ const HeaderComponent = styled.div`
 const Logo = styled.img`
 	padding: 1rem 0;
 	margin: auto;
+	height: ${(props) => (props.large ? 'auto' : '7rem')};
 	@media (max-width: 900px) {
 		height: calc(4rem + 5vw);
 	}

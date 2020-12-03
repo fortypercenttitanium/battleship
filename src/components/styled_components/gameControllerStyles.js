@@ -53,4 +53,47 @@ const PlayerForm = styled.form`
 	}
 `;
 
-export { MainWindow, InitWindow, PlayerForm };
+const SetupWindow = styled.div`
+	display: flex;
+	text-align: center;
+	flex-direction: column;
+	animation: fadein 2s ease-in;
+	@keyframes fadein {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	} ;
+`;
+
+const SetupTitle = styled.h1`
+	margin-top: 1.5rem;
+	font-size: 3rem;
+`;
+
+const GameBoardGrid = styled.div`
+	display: grid;
+	grid-template: repeat(10, 1fr) / repeat(10, 1fr);
+	height: 22rem;
+	width: 22rem;
+	margin: 2rem auto;
+	gap: 2px;
+`;
+
+const Cell = styled.div`
+	border: 1px solid white;
+	height: 100%;
+	width: 100%;
+`;
+
+export {
+	MainWindow,
+	InitWindow,
+	PlayerForm,
+	SetupWindow,
+	SetupTitle,
+	GameBoardGrid,
+	Cell,
+};

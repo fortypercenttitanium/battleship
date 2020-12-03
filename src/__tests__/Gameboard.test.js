@@ -42,17 +42,18 @@ describe('Gameboard functions', () => {
 		).toEqual([48, 58, 68, 78]);
 	});
 	it('allows valid placement of ships', () => {
-		expect(testBoard.placeShip(12, 3, 'x')).toBe(true);
+		testBoard.placeShip(12, 2, 'x');
+		expect(!!(testBoard.board[12] && testBoard.board[13])).toBe(true);
 	});
 	it('rejects ship placement that collides with other ships', () => {
 		testBoard.placeShip(12, 3, 'x');
-		expect(testBoard.placeShip(2, 4, 'y')).toBe(false);
+		expect(testBoard.checkCollisions([2, 12, 22, 32])).toBe(false);
 	});
 	it('rejects ship placement that runs through map edge on x axis', () => {
-		expect(testBoard.placeShip(8, 5, 'x')).toBe(false);
+		expect(testBoard.checkCollisions([8, 9, 10, 11, 12])).toBe(false);
 	});
 	it('rejects ship placement that runs through map edge on y axis', () => {
-		expect(testBoard.placeShip(78, 5, 'y')).toBe(false);
+		expect(testBoard.checkCollisions([78, 88, 98, 108])).toBe(false);
 	});
 	it('renders the opponent version', () => {
 		const arr = [];

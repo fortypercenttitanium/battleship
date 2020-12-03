@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import GameController from './components/GameController';
 import HeaderComponent from './components/Header';
 import Footer from './components/Footer';
@@ -9,13 +9,17 @@ import {
 } from './components/styled_components/appStyles';
 
 function App() {
+	const [timeline, setTimeline] = useState('init');
+	const setTimelineProps = (newTimeline) => {
+		setTimeline(newTimeline);
+	};
 	return (
 		<StyledApp>
-			<HeaderComponent>
+			<HeaderComponent timeline={timeline}>
 				<Header />
 			</HeaderComponent>
 			<GameControllerWindow>
-				<GameController />
+				<GameController timeline={timeline} setTimeline={setTimelineProps} />
 			</GameControllerWindow>
 			<Footer />
 		</StyledApp>
