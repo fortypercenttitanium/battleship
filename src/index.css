@@ -69,6 +69,7 @@ select {
 
 html {
 	color: #ddd;
+	font-family: 'Bebas Neue', cursive;
 }
 
 /* Remove all animations and transitions for people that prefer not to see them */

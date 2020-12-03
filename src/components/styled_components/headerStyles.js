@@ -17,10 +17,10 @@ const Logo = styled.img`
 		0% {
 			transform: translateY(100%);
 		}
-		20% {
+		10% {
 			transform: translateY(100%);
 		}
-		40% {
+		30% {
 			transform: translateY(0);
 		}
 		50% {

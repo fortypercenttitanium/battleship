@@ -10,9 +10,20 @@ export default function GameController() {
 	const [timeline, setTimeline] = useState('init');
 	const [turn, setTurn] = useState(1);
 	const [players, setPlayers] = useState([]);
+	const [dismount, setDismount] = useState(false);
+
+	const setDismountProp = (state) => {
+		setDismount(state);
+	};
+
 	const renderChild = (timeline) => {
 		return timeline === 'init' ? (
-			<Init setTimeline={setTimeline} setPlayers={setPlayers} />
+			<Init
+				setTimeline={setTimeline}
+				setPlayers={setPlayers}
+				dismount={dismount}
+				setDismount={setDismountProp}
+			/>
 		) : timeline === 'setup' ? (
 			<GameSetup setTimeline={setTimeline} />
 		) : (

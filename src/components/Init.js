@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import Player from './factories/playerFactory';
+import {
+	InitWindow,
+	PlayerForm,
+} from './styled_components/gameControllerStyles';
 
 function Init(props) {
-	const { setPlayers } = props;
+	const { setPlayers, setTimeline, setDismount, dismount } = props;
 	const [name, setName] = useState('');
 	const [error, setError] = useState('');
 	const handleChange = (e) => {
@@ -10,20 +14,30 @@ function Init(props) {
 	};
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		// remove whitespace, reject space-only names
 		setName(name.trim());
+		// can't do if(!name) because setName hasn't yet updated
 		if (!name.trim()) {
 			setError('Name required');
 			return;
 		} else {
 			setError('');
 		}
-		// const human = new Player(e.target.value);
-		// const computer = new Player('Computer');
-		// setPlayers([human, computer])
+		const human = new Player(name.trim());
+		const computer = new Player('Computer');
+		setPlayers([human, computer]);
+		setDismount(true);
+	};
+	const animationEnd = () => {
+		if (dismount) setTimeline('setup');
 	};
 	return (
-		<div>
-			<form onSubmit={handleSubmit}>
+		<InitWindow>
+			<PlayerForm
+				style={{ animation: dismount ? 'fadeout 1.5s' : 'fadein 6s ease-in' }}
+				onSubmit={handleSubmit}
+				onAnimationEnd={animationEnd}
+			>
 				<label htmlFor='name'>Enter player name:</label>
 				<input
 					type='text'
@@ -35,8 +49,8 @@ function Init(props) {
 				></input>
 				<p style={{ color: 'red' }}>{error}</p>
 				<button type='submit'>Start game</button>
-			</form>
-		</div>
+			</PlayerForm>
+		</InitWindow>
 	);
 }
 
