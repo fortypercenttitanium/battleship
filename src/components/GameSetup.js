@@ -37,11 +37,17 @@ function GameSetup({ players, setTimeline, dismount, setDismount }) {
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		setDismount(false);
-		setLoading(false);
-	}, []);
+		// using the new loading state to avoid race conditions between the render
+		// and setDismount. hint: render always wins. this causes the animation to
+		// load incorrectly
+		if (loading) {
+			setDismount(false);
+			setLoading(false);
+		}
+	}, [setDismount, loading]);
 
 	const handleAnimationEnd = () => {
+		// allow for the fadeout
 		if (dismount) setTimeline('gameStart');
 	};
 
@@ -56,11 +62,13 @@ function GameSetup({ players, setTimeline, dismount, setDismount }) {
 		}
 	};
 
+	const handleHover = (index) => {};
+
 	return (
 		!loading && (
 			<SetupWindow
 				onAnimationEnd={handleAnimationEnd}
-				style={{ animation: dismount ? 'fadeout 2s' : 'fadein 3s' }}
+				style={{ animation: dismount ? 'fadeout 2s' : 'fadein 2s' }}
 			>
 				<SetupTitle>
 					{players[0].name}, Place Your {shipTypes[currentShip].name}:
