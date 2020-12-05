@@ -5,7 +5,6 @@ function SubmarineIcon(props) {
 	const { start, axis } = props;
 	return (
 		<ContainerDiv start={start} axis={axis}>
-			{' '}
 			<svg
 				xmlns='http://www.w3.org/2000/svg'
 				width={402.667}
