@@ -7,10 +7,18 @@ import { MainWindow } from './styled_components/gameControllerStyles';
 export default function GameController({ timeline, setTimeline }) {
 	const [turn, setTurn] = useState(0);
 	const [players, setPlayers] = useState([]);
+	const [ships, setShips] = useState({
+		player: [],
+		computer: [],
+	});
 	const [dismount, setDismount] = useState(false);
 
 	const setDismountProp = (state) => {
 		setDismount(state);
+	};
+
+	const setShipsProp = (state) => {
+		setShips(state);
 	};
 
 	const renderChild = (timeline) => {
@@ -27,9 +35,15 @@ export default function GameController({ timeline, setTimeline }) {
 				players={players}
 				dismount={dismount}
 				setDismount={setDismountProp}
+				ships={ships}
+				setShips={setShipsProp}
 			/>
 		) : (
-			<GameStart setTimeline={setTimeline} />
+			<GameStart
+				setTimeline={setTimeline}
+				ships={ships}
+				setShips={setShipsProp}
+			/>
 		);
 	};
 	return <MainWindow>{renderChild(timeline)}</MainWindow>;

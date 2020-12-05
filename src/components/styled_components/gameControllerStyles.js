@@ -75,6 +75,7 @@ const SetupTitle = styled.h1`
 
 const GameBoardGrid = styled.div`
 	display: grid;
+	position: absolute;
 	grid-template: repeat(10, 1fr) / repeat(10, 1fr);
 	height: 22rem;
 	width: 22rem;

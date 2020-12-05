@@ -38,15 +38,15 @@ class Gameboard {
 			return true;
 		}
 	}
-	placeShip(location, length, axis) {
+	placeShip(location, ship, axis) {
 		const locationArray = [];
-		for (let i = 0; i < length; i++) {
+		for (let i = 0; i < ship.length; i++) {
 			axis === 'x'
 				? locationArray.push(location + i)
 				: locationArray.push(location + i * 10);
 		}
 		if (this.checkCollisions(locationArray)) {
-			locationArray.forEach((loc) => (this.board[loc].hasShip = true));
+			locationArray.forEach((loc) => (this.board[loc].hasShip = ship.name));
 			return true;
 		} else {
 			return false;
