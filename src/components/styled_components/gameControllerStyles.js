@@ -65,7 +65,9 @@ const SetupWindow = styled.div`
 		to {
 			opacity: 1;
 		}
-	} ;
+	}
+	margin: auto;
+	width: 100%;
 `;
 
 const SetupTitle = styled.h1`
@@ -73,13 +75,23 @@ const SetupTitle = styled.h1`
 	font-size: 3rem;
 `;
 
+const AxisButton = styled.button`
+	padding: 1rem;
+	margin: auto;
+`;
+
+const GBGridContainer = styled.div`
+	position: absolute;
+	display: flex;
+	left: 0;
+	right: 0;
+`;
+
 const GameBoardGrid = styled.div`
 	display: grid;
-	position: absolute;
-	grid-template: repeat(10, 1fr) / repeat(10, 1fr);
-	height: 22rem;
-	width: 22rem;
+	grid-template: repeat(10, 3rem) / repeat(10, 3rem);
 	margin: 2rem auto;
+	text-align: center;
 	gap: 2px;
 `;
 
@@ -96,5 +108,7 @@ export {
 	SetupWindow,
 	SetupTitle,
 	GameBoardGrid,
+	GBGridContainer,
+	AxisButton,
 	Cell,
 };

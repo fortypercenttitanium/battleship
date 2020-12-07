@@ -3,7 +3,9 @@ import {
 	SetupWindow,
 	SetupTitle,
 	GameBoardGrid,
+	AxisButton,
 	Cell,
+	GBGridContainer,
 } from './styled_components/gameControllerStyles';
 import Gameboard from './factories/gameboardFactory';
 import Carrier from './icons/CarrierIcon';
@@ -25,35 +27,70 @@ function GameSetup({
 			name: 'carrier',
 			length: 5,
 			getComponentWithProps: (props) => {
-				return <Carrier start={props.start} axis={props.axis} />;
+				return (
+					<Carrier
+						key={'carrier'}
+						start={props.start}
+						axis={props.axis}
+						shipLength={5}
+					/>
+				);
 			},
 		},
 		{
 			name: 'battleship',
 			length: 4,
 			getComponentWithProps: (props) => {
-				return <Battleship start={props.start} axis={props.axis} />;
+				return (
+					<Battleship
+						key={'battleship'}
+						start={props.start}
+						axis={props.axis}
+						shipLength={4}
+					/>
+				);
 			},
 		},
 		{
 			name: 'destroyer',
 			length: 3,
 			getComponentWithProps: (props) => {
-				return <Destroyer start={props.start} axis={props.axis} />;
+				return (
+					<Destroyer
+						key={'destroyer'}
+						start={props.start}
+						axis={props.axis}
+						shipLength={3}
+					/>
+				);
 			},
 		},
 		{
 			name: 'submarine',
 			length: 3,
 			getComponentWithProps: (props) => {
-				return <Submarine start={props.start} axis={props.axis} />;
+				return (
+					<Submarine
+						key={'submarine'}
+						start={props.start}
+						axis={props.axis}
+						shipLength={3}
+					/>
+				);
 			},
 		},
 		{
 			name: 'patrol boat',
 			length: 2,
 			getComponentWithProps: (props) => {
-				return <Patrol start={props.start} axis={props.axis} />;
+				return (
+					<Patrol
+						key={'patrol-boat'}
+						start={props.start}
+						axis={props.axis}
+						shipLength={2}
+					/>
+				);
 			},
 		},
 	];
@@ -86,7 +123,7 @@ function GameSetup({
 			shipState.player.push(shipTypes[currentShip]);
 			setShips(shipState);
 			if (currentShip >= 4) {
-				setDismount(true);
+				// setDismount(true);
 			} else {
 				setCurrentShip(currentShip + 1);
 			}
@@ -94,7 +131,6 @@ function GameSetup({
 	};
 
 	const findShipPlacement = (ship, board) => {
-		console.log('fsp: ', ship, board);
 		// check if ship is on board
 		if (board.find((cell) => cell.hasShip === ship.name)) {
 			const boardWithIndex = board.map((cell, index) => {
@@ -128,37 +164,42 @@ function GameSetup({
 				<SetupTitle>
 					{players[0].name}, Place Your {shipTypes[currentShip].name}:
 				</SetupTitle>
-				<button onClick={() => setAxis(axis === 'x' ? 'y' : 'x')}>
+				<AxisButton onClick={() => setAxis(axis === 'x' ? 'y' : 'x')}>
 					Change axis
-				</button>
-				<div>
+				</AxisButton>
+				<div style={{ width: '100%', height: 'auto', position: 'relative' }}>
 					{/* for ship placement */}
-					<GameBoardGrid>
-						{ships.player.map((ship) => {
-							if (findShipPlacement(ship, playerBoard.board)) {
-								const placement = findShipPlacement(ship, playerBoard.board);
-								const shipProps = {
-									start: placement.start,
-									axis: placement.axis,
-								};
-								return ship.getComponentWithProps(shipProps);
-							} else {
-								return null;
-							}
-						})}
-					</GameBoardGrid>
-					{/* cells for click handlers */}
-					<GameBoardGrid>
-						{playerBoard.board.map((cell, index) => (
-							<Cell
-								onClick={() => {
-									placeShip(playerBoard, index);
-								}}
-							>
-								{cell.hasShip ? 'x' : ''}
-							</Cell>
-						))}
-					</GameBoardGrid>
+					<GBGridContainer>
+						<GameBoardGrid>
+							{ships.player.map((ship) => {
+								if (findShipPlacement(ship, playerBoard.board)) {
+									const placement = findShipPlacement(ship, playerBoard.board);
+									const shipProps = {
+										start: placement.start,
+										axis: placement.axis,
+									};
+									return ship.getComponentWithProps(shipProps);
+								} else {
+									return null;
+								}
+							})}
+						</GameBoardGrid>
+					</GBGridContainer>
+					<GBGridContainer>
+						{/* cells for click handlers */}
+						<GameBoardGrid>
+							{playerBoard.board.map((cell, index) => (
+								<Cell
+									key={index}
+									onClick={() => {
+										placeShip(playerBoard, index);
+									}}
+								>
+									{cell.hasShip ? 'x' : ''}
+								</Cell>
+							))}
+						</GameBoardGrid>
+					</GBGridContainer>
 				</div>
 			</SetupWindow>
 		)
