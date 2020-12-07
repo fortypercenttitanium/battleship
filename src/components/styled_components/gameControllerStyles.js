@@ -99,6 +99,8 @@ const Cell = styled.div`
 	border: 1px solid white;
 	height: 100%;
 	width: 100%;
+	background-color: ${(props) =>
+		props.hovered ? 'rgba(255, 255, 255, 0.5)' : 'transparent'};
 `;
 
 export {

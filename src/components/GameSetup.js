@@ -99,6 +99,7 @@ function GameSetup({
 	const [currentShip, setCurrentShip] = useState(0);
 	const [axis, setAxis] = useState('x');
 	const [loading, setLoading] = useState(true);
+	const [hovered, setHovered] = useState([]);
 
 	useEffect(() => {
 		// using the new loading state to avoid race conditions between the render
@@ -153,7 +154,23 @@ function GameSetup({
 		}
 	};
 
-	const handleHover = (index) => {};
+	const mouseEnterHandler = (e, index, board) => {
+		const shipLength = shipTypes[currentShip].length;
+		const locations = [];
+		for (let i = 0; i < shipLength; i++) {
+			axis === 'x' ? locations.push(index + i) : locations.push(index + i * 10);
+		}
+		if (board.checkCollisions(locations)) {
+			setHovered(locations);
+		} else {
+			e.target.style.backgroundColor = 'rgba(255, 60, 60, 0.6)';
+		}
+	};
+
+	const mouseLeaveHandler = (e) => {
+		e.target.style.backgroundColor = '';
+		setHovered([]);
+	};
 
 	return (
 		!loading && (
@@ -191,8 +208,15 @@ function GameSetup({
 							{playerBoard.board.map((cell, index) => (
 								<Cell
 									key={index}
+									hovered={hovered.includes(index)}
 									onClick={() => {
 										placeShip(playerBoard, index);
+									}}
+									onMouseEnter={(e) => {
+										mouseEnterHandler(e, index, playerBoard);
+									}}
+									onMouseLeave={(e) => {
+										mouseLeaveHandler(e, index);
 									}}
 								/>
 							))}
