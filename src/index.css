@@ -81,3 +81,14 @@ html {
 		scroll-behavior: auto !important;
 	}
 }
+
+body {
+	min-height: 100vh;
+	overflow: hidden;
+}
+
+#root {
+	height: 100vh;
+	overflow: auto;
+	margin: 0;
+}

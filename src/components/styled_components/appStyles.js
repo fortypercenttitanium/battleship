@@ -9,7 +9,7 @@ const StyledApp = styled.div`
 		rgba(0, 0, 64, 1) 76%,
 		rgba(1, 0, 37, 1) 100%
 	);
-	height: 100vh;
+	height: 100%;
 `;
 
 const Header = styled.header`
@@ -19,6 +19,7 @@ const Header = styled.header`
 const GameControllerWindow = styled.div`
 	display: flex;
 	width: 100%;
+	margin: auto;
 `;
 
 export { StyledApp, Header, GameControllerWindow };

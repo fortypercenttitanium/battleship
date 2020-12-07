@@ -71,13 +71,21 @@ const SetupWindow = styled.div`
 `;
 
 const SetupTitle = styled.h1`
-	margin-top: 1.5rem;
+	margin-top: 1rem;
 	font-size: 3rem;
+	@media (max-width: 900px) {
+		font-size: 2rem;
+	}
 `;
 
 const AxisButton = styled.button`
 	padding: 1rem;
 	margin: auto;
+	font-size: 1.5rem;
+	@media (max-width: 900px) {
+		font-size: 1rem;
+		padding: 0.5rem 0.8rem;
+	}
 `;
 
 const GBGridContainer = styled.div`
@@ -93,6 +101,9 @@ const GameBoardGrid = styled.div`
 	margin: 2rem auto;
 	text-align: center;
 	gap: 2px;
+	@media (max-width: 550px) {
+		grid-template: repeat(10, 2rem) / repeat(10, 2rem);
+	}
 `;
 
 const Cell = styled.div`

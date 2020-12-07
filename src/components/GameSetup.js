@@ -182,9 +182,16 @@ function GameSetup({
 					{players[0].name}, Place Your {shipTypes[currentShip].name}:
 				</SetupTitle>
 				<AxisButton onClick={() => setAxis(axis === 'x' ? 'y' : 'x')}>
-					Change axis
+					AXIS: {axis}
 				</AxisButton>
-				<div style={{ width: '100%', height: 'auto', position: 'relative' }}>
+				<div
+					style={{
+						width: '100%',
+						height: '36rem',
+						position: 'relative',
+						marginBottom: '3rem',
+					}}
+				>
 					{/* for ship placement */}
 					<GBGridContainer>
 						<GameBoardGrid>
