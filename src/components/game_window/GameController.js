@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Init from './Init';
 import GameSetup from './GameSetup';
 import GameStart from './GameStart';
-import { MainWindow } from './styled_components/gameControllerStyles';
+import { MainWindow } from '../styled_components/gameControllerStyles';
 
 export default function GameController({ timeline, setTimeline }) {
 	const [turn, setTurn] = useState(0);

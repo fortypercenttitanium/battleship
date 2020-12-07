@@ -1,6 +1,6 @@
 import React from 'react';
-import { HeaderComponent, Logo } from './styled_components/headerStyles';
-import logo from '../assets/images/bs_logo.png';
+import { HeaderComponent, Logo } from '../styled_components/headerStyles';
+import logo from '../../assets/images/bs_logo.png';
 
 export default function Header({ timeline }) {
 	return (

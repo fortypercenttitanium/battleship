@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import Player from './factories/playerFactory';
+import Player from '../../factories/playerFactory';
 import {
 	InitWindow,
 	PlayerForm,
-} from './styled_components/gameControllerStyles';
+} from '../styled_components/gameControllerStyles';
 
 function Init({ setPlayers, setTimeline, setDismount, dismount }) {
 	const [name, setName] = useState('');

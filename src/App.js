@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import GameController from './components/GameController';
-import HeaderComponent from './components/Header';
-import Footer from './components/Footer';
+import GameController from './components/game_window/GameController';
+import HeaderComponent from './components/header/Header';
+import Footer from './components/footer/Footer';
 import {
 	StyledApp,
 	Header,

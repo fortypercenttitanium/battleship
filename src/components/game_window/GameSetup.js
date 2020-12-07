@@ -6,13 +6,13 @@ import {
 	AxisButton,
 	Cell,
 	GBGridContainer,
-} from './styled_components/gameControllerStyles';
-import Gameboard from './factories/gameboardFactory';
-import Carrier from './icons/CarrierIcon';
-import Battleship from './icons/BattleshipIcon';
-import Destroyer from './icons/DestroyerIcon';
-import Submarine from './icons/SubmarineIcon';
-import Patrol from './icons/PatrolIcon';
+} from '../styled_components/gameControllerStyles';
+import Gameboard from '../../factories/gameboardFactory';
+import Carrier from '../icons/CarrierIcon';
+import Battleship from '../icons/BattleshipIcon';
+import Destroyer from '../icons/DestroyerIcon';
+import Submarine from '../icons/SubmarineIcon';
+import Patrol from '../icons/PatrolIcon';
 
 function GameSetup({
 	players,
