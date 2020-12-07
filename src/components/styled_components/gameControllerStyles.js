@@ -88,6 +88,13 @@ const AxisButton = styled.button`
 	}
 `;
 
+const GridOverlayContainer = styled.div`
+	width: 100%;
+	height: 36rem;
+	position: relative;
+	margin-bottom: 3rem;
+`;
+
 const GBGridContainer = styled.div`
 	position: absolute;
 	display: flex;
@@ -111,7 +118,13 @@ const Cell = styled.div`
 	height: 100%;
 	width: 100%;
 	transition: 0.3s;
-	cursor: ${(props) => props.cursor};
+	background-color: ${(props) =>
+		props.highlight ? 'rgba(255, 255, 255, 0.7)' : ''};
+	&:hover {
+		background-color: ${(props) =>
+			props.highlight ? '' : 'rgba(255, 60, 60, 0.6)'};
+		cursor: ${(props) => (props.highlight ? 'pointer' : 'not-allowed')};
+	}
 `;
 
 export {
@@ -124,4 +137,5 @@ export {
 	GBGridContainer,
 	AxisButton,
 	Cell,
+	GridOverlayContainer,
 };
