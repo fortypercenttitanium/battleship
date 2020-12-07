@@ -2,9 +2,9 @@ import * as React from 'react';
 import ContainerDiv from './ContainerDiv';
 
 function DestroyerIcon(props) {
-	const { start, axis, shipLength } = props;
+	const { start, axis, ship_length } = props;
 	return (
-		<ContainerDiv start={start} axis={axis} shipLength={shipLength}>
+		<ContainerDiv start={start} axis={axis} ship_length={ship_length}>
 			<svg
 				xmlns='http://www.w3.org/2000/svg'
 				width='100%'

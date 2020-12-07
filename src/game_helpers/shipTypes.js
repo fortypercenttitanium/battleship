@@ -14,7 +14,7 @@ const shipTypes = [
 					key={'carrier'}
 					start={props.start}
 					axis={props.axis}
-					shipLength={5}
+					ship_length={5}
 				/>
 			);
 		},
@@ -28,7 +28,7 @@ const shipTypes = [
 					key={'battleship'}
 					start={props.start}
 					axis={props.axis}
-					shipLength={4}
+					ship_length={4}
 				/>
 			);
 		},
@@ -42,7 +42,7 @@ const shipTypes = [
 					key={'destroyer'}
 					start={props.start}
 					axis={props.axis}
-					shipLength={3}
+					ship_length={3}
 				/>
 			);
 		},
@@ -56,7 +56,7 @@ const shipTypes = [
 					key={'submarine'}
 					start={props.start}
 					axis={props.axis}
-					shipLength={3}
+					ship_length={3}
 				/>
 			);
 		},
@@ -70,7 +70,7 @@ const shipTypes = [
 					key={'patrol-boat'}
 					start={props.start}
 					axis={props.axis}
-					shipLength={2}
+					ship_length={2}
 				/>
 			);
 		},
