@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Init from './Init';
 import GameSetup from './GameSetup';
 import GameStart from './GameStart';
 import { MainWindow } from '../styled_components/gameControllerStyles';
 
 export default function GameController({ timeline, setTimeline }) {
-	const [turn, setTurn] = useState(0);
+	// const [turn, setTurn] = useState(0);
 	const [players, setPlayers] = useState([]);
 	const [ships, setShips] = useState({
 		player: [],
@@ -13,6 +13,7 @@ export default function GameController({ timeline, setTimeline }) {
 	});
 	const [dismount, setDismount] = useState(false);
 
+	// to avoid passing a setState directly, pass these helper functions
 	const setDismountProp = (state) => {
 		setDismount(state);
 	};
@@ -21,6 +22,7 @@ export default function GameController({ timeline, setTimeline }) {
 		setShips(state);
 	};
 
+	// conditionally render based on the app state "timeline"
 	const renderChild = (timeline) => {
 		return timeline === 'init' ? (
 			<Init

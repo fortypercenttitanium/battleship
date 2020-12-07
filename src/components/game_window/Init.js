@@ -8,28 +8,41 @@ import {
 function Init({ setPlayers, setTimeline, setDismount, dismount }) {
 	const [name, setName] = useState('');
 	const [error, setError] = useState('');
+
 	const handleChange = (e) => {
 		setName(e.target.value);
 	};
+
 	const handleSubmit = (e) => {
+		// do not refresh page
 		e.preventDefault();
+
 		// remove whitespace, reject space-only names
 		setName(name.trim());
+
 		// can't do if(!name) because setName hasn't yet updated
 		if (!name.trim()) {
 			setError('Name required');
 			return;
 		} else {
+			//remove the error if they enter a valid name after an invalid one
 			setError('');
 		}
+
 		const human = new Player(name.trim());
 		const computer = new Player('Computer');
 		setPlayers([human, computer]);
+
+		// this allows for the component to render with
+		// the fade out animation into the next app state
 		setDismount(true);
 	};
+
+	// this triggers if the component is fading out into next app state
 	const handleAnimationEnd = () => {
 		if (dismount) setTimeline('setup');
 	};
+
 	return (
 		<InitWindow>
 			<PlayerForm
@@ -46,7 +59,8 @@ function Init({ setPlayers, setTimeline, setDismount, dismount }) {
 					onChange={handleChange}
 					autoComplete='off'
 					value={name}
-				></input>
+				/>
+				{/* handles errors if name is invalid */}
 				<p style={{ color: 'red' }}>{error}</p>
 				<button type='submit'>Start game</button>
 			</PlayerForm>

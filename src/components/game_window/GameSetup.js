@@ -8,103 +8,29 @@ import {
 	GBGridContainer,
 } from '../styled_components/gameControllerStyles';
 import Gameboard from '../../factories/gameboardFactory';
-import Carrier from '../icons/CarrierIcon';
-import Battleship from '../icons/BattleshipIcon';
-import Destroyer from '../icons/DestroyerIcon';
-import Submarine from '../icons/SubmarineIcon';
-import Patrol from '../icons/PatrolIcon';
+import shipTypes from '../../game_helpers/shipTypes';
+import findShipPlacement from '../../game_helpers/findShipPlacement';
 
 function GameSetup({
 	players,
 	setTimeline,
+	timeline,
 	dismount,
 	setDismount,
 	ships,
 	setShips,
 }) {
-	const shipTypes = [
-		{
-			name: 'carrier',
-			length: 5,
-			getComponentWithProps: (props) => {
-				return (
-					<Carrier
-						key={'carrier'}
-						start={props.start}
-						axis={props.axis}
-						shipLength={5}
-					/>
-				);
-			},
-		},
-		{
-			name: 'battleship',
-			length: 4,
-			getComponentWithProps: (props) => {
-				return (
-					<Battleship
-						key={'battleship'}
-						start={props.start}
-						axis={props.axis}
-						shipLength={4}
-					/>
-				);
-			},
-		},
-		{
-			name: 'destroyer',
-			length: 3,
-			getComponentWithProps: (props) => {
-				return (
-					<Destroyer
-						key={'destroyer'}
-						start={props.start}
-						axis={props.axis}
-						shipLength={3}
-					/>
-				);
-			},
-		},
-		{
-			name: 'submarine',
-			length: 3,
-			getComponentWithProps: (props) => {
-				return (
-					<Submarine
-						key={'submarine'}
-						start={props.start}
-						axis={props.axis}
-						shipLength={3}
-					/>
-				);
-			},
-		},
-		{
-			name: 'patrol boat',
-			length: 2,
-			getComponentWithProps: (props) => {
-				return (
-					<Patrol
-						key={'patrol-boat'}
-						start={props.start}
-						axis={props.axis}
-						shipLength={2}
-					/>
-				);
-			},
-		},
-	];
-
 	const [playerBoard, setPlayerBoard] = useState(new Gameboard());
 	const [currentShip, setCurrentShip] = useState(0);
 	const [axis, setAxis] = useState('x');
 	const [loading, setLoading] = useState(true);
 	const [hovered, setHovered] = useState([]);
 
+	// using a new loading state to avoid race conditions between the render
+	// and setDismount. hint: render always wins. this causes the animation to
+	// load incorrectly. this method allows the component to always render with
+	// the animation starting from being completely faded
 	useEffect(() => {
-		// using the new loading state to avoid race conditions between the render
-		// and setDismount. hint: render always wins. this causes the animation to
-		// load incorrectly
 		if (loading) {
 			setDismount(false);
 			setLoading(false);
@@ -116,7 +42,7 @@ function GameSetup({
 		if (dismount) setTimeline('gameStart');
 	};
 
-	const placeShip = (board, location) => {
+	const handlePlaceShip = (board, location) => {
 		if (board.placeShip(location, shipTypes[currentShip], axis)) {
 			setPlayerBoard(board);
 			// update ship state
@@ -131,29 +57,6 @@ function GameSetup({
 		}
 	};
 
-	const findShipPlacement = (ship, board) => {
-		// check if ship is on board
-		if (board.find((cell) => cell.hasShip === ship.name)) {
-			const boardWithIndex = board.map((cell, index) => {
-				cell.index = index;
-				return cell;
-			});
-			const shipLocation = boardWithIndex.filter(
-				(cell) => cell.hasShip === ship.name
-			);
-			const axis =
-				shipLocation[shipLocation.length - 1].index - shipLocation[0].index <= 5
-					? 'x'
-					: 'y';
-			return {
-				start: shipLocation[0].index,
-				axis,
-			};
-		} else {
-			return;
-		}
-	};
-
 	const mouseEnterHandler = (e, index, board) => {
 		const shipLength = shipTypes[currentShip].length;
 		const locations = [];
@@ -164,11 +67,13 @@ function GameSetup({
 			setHovered(locations);
 		} else {
 			e.target.style.backgroundColor = 'rgba(255, 60, 60, 0.6)';
+			e.target.style.cursor = 'not-allowed';
 		}
 	};
 
 	const mouseLeaveHandler = (e) => {
-		e.target.style.backgroundColor = '';
+		e.target.style.backgroundColor = 'transparent';
+		e.target.style.cursor = 'pointer';
 		setHovered([]);
 	};
 
@@ -212,21 +117,28 @@ function GameSetup({
 					<GBGridContainer>
 						{/* cells for click handlers */}
 						<GameBoardGrid>
-							{playerBoard.board.map((cell, index) => (
-								<Cell
-									key={index}
-									hovered={hovered.includes(index)}
-									onClick={() => {
-										placeShip(playerBoard, index);
-									}}
-									onMouseEnter={(e) => {
-										mouseEnterHandler(e, index, playerBoard);
-									}}
-									onMouseLeave={(e) => {
-										mouseLeaveHandler(e, index);
-									}}
-								/>
-							))}
+							{playerBoard.board.map((cell, index) => {
+								return (
+									<Cell
+										key={index}
+										style={{
+											backgroundColor: hovered.includes(index)
+												? 'rgba(255, 255, 255, 0.5)'
+												: '',
+										}}
+										cursor={'pointer'}
+										onClick={() => {
+											handlePlaceShip(playerBoard, index);
+										}}
+										onMouseEnter={(e) => {
+											mouseEnterHandler(e, index, playerBoard);
+										}}
+										onMouseLeave={(e) => {
+											mouseLeaveHandler(e, index);
+										}}
+									/>
+								);
+							})}
 						</GameBoardGrid>
 					</GBGridContainer>
 				</div>
