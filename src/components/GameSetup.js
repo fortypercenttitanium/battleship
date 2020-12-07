@@ -123,7 +123,7 @@ function GameSetup({
 			shipState.player.push(shipTypes[currentShip]);
 			setShips(shipState);
 			if (currentShip >= 4) {
-				// setDismount(true);
+				setDismount(true);
 			} else {
 				setCurrentShip(currentShip + 1);
 			}
@@ -194,9 +194,7 @@ function GameSetup({
 									onClick={() => {
 										placeShip(playerBoard, index);
 									}}
-								>
-									{cell.hasShip ? 'x' : ''}
-								</Cell>
+								/>
 							))}
 						</GameBoardGrid>
 					</GBGridContainer>
