@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import Init from './Init';
 import GameSetup from './GameSetup';
 import GameStart from './GameStart';

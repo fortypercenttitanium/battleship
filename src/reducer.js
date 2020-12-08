@@ -1,7 +1,6 @@
 const reducer = (state, action) => {
 	const { type, payload } = action;
 	const players = { ...state.players };
-	// const newState = {...state}     //try later
 	switch (type) {
 		case 'SET_TIMELINE': {
 			return {

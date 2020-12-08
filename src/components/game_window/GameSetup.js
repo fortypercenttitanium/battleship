@@ -28,10 +28,6 @@ function GameSetup({ dismount, setDismount }) {
 		}
 	}, [setDismount, loading]);
 
-	// useEffect(() => {
-	// 	console.log(state);
-	// });
-
 	const handleAnimationEnd = () => {
 		// allow for the fadeout
 		if (dismount) dispatch({ type: 'SET_TIMELINE', payload: 'gameStart' });
