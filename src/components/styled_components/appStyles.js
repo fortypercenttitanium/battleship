@@ -16,10 +16,10 @@ const Header = styled.header`
 	width: 100%;
 `;
 
-const GameControllerWindow = styled.div`
+const GameWindowContainer = styled.div`
 	display: flex;
 	width: 100%;
 	margin: auto;
 `;
 
-export { StyledApp, Header, GameControllerWindow };
+export { StyledApp, Header, GameWindowContainer };

@@ -1,28 +1,27 @@
-import React, { useState } from 'react';
-import GameController from './components/game_window/GameController';
+import React from 'react';
+import GameWindow from './components/game_window/GameWindow';
 import HeaderComponent from './components/header/Header';
 import Footer from './components/footer/Footer';
 import {
 	StyledApp,
 	Header,
-	GameControllerWindow,
+	GameWindowContainer,
 } from './components/styled_components/appStyles';
+import GameController from './GameController';
 
 function App() {
-	const [timeline, setTimeline] = useState('init');
-	const setTimelineProps = (newTimeline) => {
-		setTimeline(newTimeline);
-	};
 	return (
-		<StyledApp>
-			<HeaderComponent timeline={timeline}>
-				<Header />
-			</HeaderComponent>
-			<GameControllerWindow>
-				<GameController timeline={timeline} setTimeline={setTimelineProps} />
-			</GameControllerWindow>
-			<Footer />
-		</StyledApp>
+		<GameController>
+			<StyledApp>
+				<HeaderComponent>
+					<Header />
+				</HeaderComponent>
+				<GameWindowContainer>
+					<GameWindow />
+				</GameWindowContainer>
+				<Footer />
+			</StyledApp>
+		</GameController>
 	);
 }
 

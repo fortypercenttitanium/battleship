@@ -1,17 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import findShipPlacement from '../../game_helpers/findShipPlacement';
 import {
 	GameBoardGrid,
 	GBGridContainer,
 } from '../styled_components/gameControllerStyles';
+import { store } from '../../GameController';
 
-function ShipPlacementGrid({ ships, playerBoard }) {
+function ShipPlacementGrid() {
+	const { ships, gameBoard } = useContext(store).state.players[0];
+	const { board } = gameBoard;
+	console.log(board);
 	return (
 		<GBGridContainer>
 			<GameBoardGrid>
-				{ships.player.map((ship) => {
-					if (findShipPlacement(ship, playerBoard.board)) {
-						const placement = findShipPlacement(ship, playerBoard.board);
+				{ships.map((ship) => {
+					if (findShipPlacement(ship, board)) {
+						const placement = findShipPlacement(ship, board);
 						const shipProps = {
 							start: placement.start,
 							axis: placement.axis,

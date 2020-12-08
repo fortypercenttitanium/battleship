@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
 	GameBoardGrid,
 	Cell,
 	GBGridContainer,
 } from '../styled_components/gameControllerStyles';
 import shipTypes from '../../game_helpers/shipTypes';
+import { store } from '../../GameController';
 
-function CellSelectorGrid({ playerBoard, handlePlaceShip, currentShip, axis }) {
+function CellSelectorGrid({ handlePlaceShip, currentShip, axis }) {
+	const player = useContext(store).state.players[0];
+	const playerBoard = player.gameBoard;
 	const [hovered, setHovered] = useState([]);
 
 	const mouseEnterHandler = (index, board) => {
@@ -33,7 +36,7 @@ function CellSelectorGrid({ playerBoard, handlePlaceShip, currentShip, axis }) {
 							key={index}
 							highlight={hovered.includes(index)}
 							onClick={() => {
-								handlePlaceShip(playerBoard, index);
+								handlePlaceShip(player, index);
 							}}
 							onMouseEnter={() => {
 								mouseEnterHandler(index, playerBoard);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
 	SetupWindow,
 	SetupTitle,
@@ -7,18 +7,12 @@ import {
 } from '../styled_components/gameControllerStyles';
 import ShipPlacementGrid from './ShipPlacementGrid';
 import CellSelectorGrid from './CellSelectorGrid';
-import Gameboard from '../../factories/gameboardFactory';
 import shipTypes from '../../game_helpers/shipTypes';
+import { store } from '../../GameController';
 
-function GameSetup({
-	players,
-	setTimeline,
-	dismount,
-	setDismount,
-	ships,
-	setShips,
-}) {
-	const [playerBoard, setPlayerBoard] = useState(new Gameboard());
+function GameSetup({ dismount, setDismount }) {
+	const { state, dispatch } = useContext(store);
+	const { players } = state;
 	const [currentShip, setCurrentShip] = useState(0);
 	const [axis, setAxis] = useState('x');
 	const [loading, setLoading] = useState(true);
@@ -34,18 +28,29 @@ function GameSetup({
 		}
 	}, [setDismount, loading]);
 
+	// useEffect(() => {
+	// 	console.log(state);
+	// });
+
 	const handleAnimationEnd = () => {
 		// allow for the fadeout
-		if (dismount) setTimeline('gameStart');
+		if (dismount) dispatch({ type: 'SET_TIMELINE', payload: 'gameStart' });
 	};
 
-	const handlePlaceShip = (board, location) => {
-		if (board.placeShip(location, shipTypes[currentShip], axis)) {
-			setPlayerBoard(board);
+	const handlePlaceShip = (player, location) => {
+		const { gameBoard } = player;
+		if (
+			gameBoard.checkCollisions(
+				gameBoard.createLocationArray(location, shipTypes[currentShip], axis)
+			)
+		) {
+			gameBoard.placeShip(location, shipTypes[currentShip], axis);
+			dispatch({ type: 'SET_BOARD', payload: gameBoard.board });
 			// update ship state
-			const newShips = { ...ships };
-			newShips.player.push(shipTypes[currentShip]);
-			setShips(newShips);
+			dispatch({
+				type: 'ADD_SHIP',
+				payload: { player: 0, ship: shipTypes[currentShip] },
+			});
 			if (currentShip >= 4) {
 				setDismount(true);
 			} else {
@@ -68,10 +73,9 @@ function GameSetup({
 				</AxisButton>
 				<GridOverlayContainer>
 					{/* for ship placement */}
-					<ShipPlacementGrid ships={ships} playerBoard={playerBoard} />
+					<ShipPlacementGrid />
 					{/* cells for click handlers */}
 					<CellSelectorGrid
-						playerBoard={playerBoard}
 						currentShip={currentShip}
 						axis={axis}
 						handlePlaceShip={handlePlaceShip}

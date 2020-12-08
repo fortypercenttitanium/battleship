@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Player from '../../factories/playerFactory';
 import {
 	InitWindow,
 	PlayerForm,
 } from '../styled_components/gameControllerStyles';
+import { store } from '../../GameController';
 
-function Init({ setPlayers, setTimeline, setDismount, dismount }) {
+function Init({ setDismount, dismount }) {
+	const { dispatch } = useContext(store);
 	const [name, setName] = useState('');
 	const [error, setError] = useState('');
 
@@ -31,7 +33,7 @@ function Init({ setPlayers, setTimeline, setDismount, dismount }) {
 
 		const human = new Player(name.trim());
 		const computer = new Player('Computer');
-		setPlayers([human, computer]);
+		dispatch({ type: 'SET_PLAYERS', payload: [human, computer] });
 
 		// this allows for the component to render with
 		// the fade out animation into the next app state
@@ -40,7 +42,7 @@ function Init({ setPlayers, setTimeline, setDismount, dismount }) {
 
 	// this triggers if the component is fading out into next app state
 	const handleAnimationEnd = () => {
-		if (dismount) setTimeline('setup');
+		if (dismount) dispatch({ type: 'SET_TIMELINE', payload: 'setup' });
 	};
 
 	return (
