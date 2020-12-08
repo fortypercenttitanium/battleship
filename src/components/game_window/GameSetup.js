@@ -4,6 +4,7 @@ import {
 	SetupTitle,
 	AxisButton,
 	GridOverlayContainer,
+	SetupGridContainer,
 } from '../styled_components/gameControllerStyles';
 import ShipPlacementGrid from './ShipPlacementGrid';
 import CellSelectorGrid from './CellSelectorGrid';
@@ -30,7 +31,7 @@ function GameSetup({ dismount, setDismount }) {
 
 	const handleAnimationEnd = () => {
 		// allow for the fadeout
-		if (dismount) dispatch({ type: 'SET_TIMELINE', payload: 'gameStart' });
+		if (dismount) dispatch({ type: 'SET_TIMELINE', payload: 'game start' });
 	};
 
 	const handlePlaceShip = (player, location) => {
@@ -45,7 +46,7 @@ function GameSetup({ dismount, setDismount }) {
 			// update ship state
 			dispatch({
 				type: 'ADD_SHIP',
-				payload: { player: 0, ship: shipTypes[currentShip] },
+				payload: shipTypes[currentShip],
 			});
 			if (currentShip >= 4) {
 				setDismount(true);
@@ -69,13 +70,17 @@ function GameSetup({ dismount, setDismount }) {
 				</AxisButton>
 				<GridOverlayContainer>
 					{/* for ship placement */}
-					<ShipPlacementGrid />
+					<SetupGridContainer>
+						<ShipPlacementGrid />
+					</SetupGridContainer>
 					{/* cells for click handlers */}
-					<CellSelectorGrid
-						currentShip={currentShip}
-						axis={axis}
-						handlePlaceShip={handlePlaceShip}
-					/>
+					<SetupGridContainer>
+						<CellSelectorGrid
+							currentShip={currentShip}
+							axis={axis}
+							handlePlaceShip={handlePlaceShip}
+						/>
+					</SetupGridContainer>
 				</GridOverlayContainer>
 			</SetupWindow>
 		)

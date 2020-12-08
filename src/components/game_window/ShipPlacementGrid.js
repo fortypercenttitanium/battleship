@@ -1,32 +1,39 @@
 import React, { useContext } from 'react';
 import findShipPlacement from '../../game_helpers/findShipPlacement';
-import {
-	GameBoardGrid,
-	GBGridContainer,
-} from '../styled_components/gameControllerStyles';
+import { GameBoardGrid, Cell } from '../styled_components/gameControllerStyles';
 import { store } from '../../GameController';
 
 function ShipPlacementGrid() {
-	const { ships, gameBoard } = useContext(store).state.players[0];
+	const { state } = useContext(store);
+	const { timeline } = state;
+	const { ships, gameBoard } = state.players[0];
 	const { board } = gameBoard;
-	console.log(board);
+
+	const fillRemainingCells = () => {
+		let arr = [];
+		for (let i = 0; i < 100; i++) {
+			arr.push([i]);
+		}
+		arr = arr.filter((cell) => !board[cell].hasShip);
+		return arr.map(() => <Cell />);
+	};
+
 	return (
-		<GBGridContainer>
-			<GameBoardGrid>
-				{ships.map((ship) => {
-					if (findShipPlacement(ship, board)) {
-						const placement = findShipPlacement(ship, board);
-						const shipProps = {
-							start: placement.start,
-							axis: placement.axis,
-						};
-						return ship.getComponentWithProps(shipProps);
-					} else {
-						return null;
-					}
-				})}
-			</GameBoardGrid>
-		</GBGridContainer>
+		<GameBoardGrid inGame={timeline === 'game start'}>
+			{ships.map((ship) => {
+				if (findShipPlacement(ship, board)) {
+					const placement = findShipPlacement(ship, board);
+					const shipProps = {
+						start: placement.start,
+						axis: placement.axis,
+					};
+					return ship.getComponentWithProps(shipProps);
+				} else {
+					return null;
+				}
+			})}
+			{fillRemainingCells()}
+		</GameBoardGrid>
 	);
 }
 

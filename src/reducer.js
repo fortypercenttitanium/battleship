@@ -16,7 +16,7 @@ const reducer = (state, action) => {
 		}
 		case 'ADD_SHIP': {
 			const player = players[0];
-			player.ships.push(payload.ship);
+			player.ships.push(payload);
 			return {
 				...state,
 				players,

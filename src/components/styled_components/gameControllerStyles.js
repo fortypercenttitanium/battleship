@@ -95,7 +95,7 @@ const GridOverlayContainer = styled.div`
 	margin-bottom: 3rem;
 `;
 
-const GBGridContainer = styled.div`
+const SetupGridContainer = styled.div`
 	position: absolute;
 	display: flex;
 	left: 0;
@@ -127,6 +127,13 @@ const Cell = styled.div`
 	}
 `;
 
+const GameStartContainer = styled.div`
+	display: flex;
+	width: 100%;
+	justify-content: center;
+	align-items: center;
+`;
+
 export {
 	MainWindow,
 	InitWindow,
@@ -134,8 +141,9 @@ export {
 	SetupWindow,
 	SetupTitle,
 	GameBoardGrid,
-	GBGridContainer,
+	SetupGridContainer,
 	AxisButton,
 	Cell,
 	GridOverlayContainer,
+	GameStartContainer,
 };

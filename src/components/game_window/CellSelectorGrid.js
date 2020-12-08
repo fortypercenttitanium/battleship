@@ -1,14 +1,12 @@
 import React, { useState, useContext } from 'react';
-import {
-	GameBoardGrid,
-	Cell,
-	GBGridContainer,
-} from '../styled_components/gameControllerStyles';
+import { GameBoardGrid, Cell } from '../styled_components/gameControllerStyles';
 import shipTypes from '../../game_helpers/shipTypes';
 import { store } from '../../GameController';
 
 function CellSelectorGrid({ handlePlaceShip, currentShip, axis }) {
-	const player = useContext(store).state.players[0];
+	const { state } = useContext(store);
+	const { timeline } = state;
+	const player = state.players[0];
 	const playerBoard = player.gameBoard;
 	const [hovered, setHovered] = useState([]);
 
@@ -28,27 +26,25 @@ function CellSelectorGrid({ handlePlaceShip, currentShip, axis }) {
 	};
 
 	return (
-		<GBGridContainer>
-			<GameBoardGrid>
-				{playerBoard.board.map((cell, index) => {
-					return (
-						<Cell
-							key={index}
-							highlight={hovered.includes(index)}
-							onClick={() => {
-								handlePlaceShip(player, index);
-							}}
-							onMouseEnter={() => {
-								mouseEnterHandler(index, playerBoard);
-							}}
-							onMouseLeave={() => {
-								mouseLeaveHandler(index);
-							}}
-						/>
-					);
-				})}
-			</GameBoardGrid>
-		</GBGridContainer>
+		<GameBoardGrid>
+			{playerBoard.board.map((cell, index) => {
+				return (
+					<Cell
+						key={index}
+						highlight={hovered.includes(index)}
+						onClick={() => {
+							handlePlaceShip(player, index);
+						}}
+						onMouseEnter={() => {
+							mouseEnterHandler(index, playerBoard);
+						}}
+						onMouseLeave={() => {
+							mouseLeaveHandler(index);
+						}}
+					/>
+				);
+			})}
+		</GameBoardGrid>
 	);
 }
 
