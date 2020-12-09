@@ -1,4 +1,4 @@
-const reducer = (state, action) => {
+function reducer(state, action) {
 	const { type, payload } = action;
 	switch (type) {
 		case 'SET_TIMELINE': {
@@ -13,19 +13,15 @@ const reducer = (state, action) => {
 				players: payload,
 			};
 		}
-		case 'ADD_SHIP': {
-			const { player, ship } = payload;
+		case 'SET_SHIPS': {
+			const { player, ships } = payload;
 			const newState = { ...state };
-			const newShips = [...newState.players[player].ships, ship];
-			console.log('1: ', newState.players[player].ships);
-			newState.players[player].ships = newShips;
-			console.log('2: ', newState.players[player].ships);
+			newState.players[player].ships = ships;
 			return {
 				...newState,
 			};
 		}
 		case 'SET_BOARD': {
-			debugger;
 			const { locationArray, player, ship } = payload;
 			const newState = { ...state };
 			const newBoard = newState.players[player].gameBoard.board.map(
@@ -44,6 +40,6 @@ const reducer = (state, action) => {
 		default:
 			return state;
 	}
-};
+}
 
 export default reducer;

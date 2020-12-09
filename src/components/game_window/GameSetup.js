@@ -29,10 +29,6 @@ function GameSetup({ dismount, setDismount }) {
 		}
 	}, [setDismount, loading]);
 
-	useEffect(() => {
-		console.log(state);
-	});
-
 	const handleAnimationEnd = () => {
 		// allow for the fadeout
 		if (dismount) dispatch({ type: 'SET_TIMELINE', payload: 'game start' });
@@ -60,8 +56,11 @@ function GameSetup({ dismount, setDismount }) {
 			});
 			// update ship state
 			dispatch({
-				type: 'ADD_SHIP',
-				payload: { ship: shipTypes[currentShip], player: 'human' },
+				type: 'SET_SHIPS',
+				payload: {
+					ships: [...players.human.ships, shipTypes[currentShip]],
+					player: 'human',
+				},
 			});
 			if (currentShip >= 4) {
 				setDismount(true);
