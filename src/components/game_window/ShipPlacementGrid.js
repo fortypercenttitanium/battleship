@@ -6,7 +6,7 @@ import { store } from '../../GameController';
 function ShipPlacementGrid() {
 	const { state } = useContext(store);
 	const { timeline } = state;
-	const { ships, gameBoard } = state.players[0];
+	const { ships, gameBoard } = state.players.human;
 	const { board } = gameBoard;
 
 	const fillRemainingCells = () => {
@@ -15,7 +15,9 @@ function ShipPlacementGrid() {
 			arr.push([i]);
 		}
 		arr = arr.filter((cell) => !board[cell].hasShip);
-		return arr.map(() => <Cell />);
+		return arr.map((cell, index) => (
+			<Cell key={index} timeline={timeline} board='friendly' cursor={''} />
+		));
 	};
 
 	return (

@@ -29,6 +29,10 @@ function GameSetup({ dismount, setDismount }) {
 		}
 	}, [setDismount, loading]);
 
+	useEffect(() => {
+		console.log(state);
+	});
+
 	const handleAnimationEnd = () => {
 		// allow for the fadeout
 		if (dismount) dispatch({ type: 'SET_TIMELINE', payload: 'game start' });
@@ -36,17 +40,28 @@ function GameSetup({ dismount, setDismount }) {
 
 	const handlePlaceShip = (player, location) => {
 		const { gameBoard } = player;
+		const locationArray = gameBoard.createLocationArray(
+			location,
+			shipTypes[currentShip],
+			axis
+		);
 		if (
-			gameBoard.checkCollisions(
-				gameBoard.createLocationArray(location, shipTypes[currentShip], axis)
-			)
+			// returns true if there are NO collisions
+			gameBoard.checkCollisions(locationArray)
 		) {
-			gameBoard.placeShip(location, shipTypes[currentShip], axis);
-			dispatch({ type: 'SET_BOARD', payload: gameBoard.board });
+			// update board state
+			dispatch({
+				type: 'SET_BOARD',
+				payload: {
+					locationArray,
+					player: 'human',
+					ship: shipTypes[currentShip],
+				},
+			});
 			// update ship state
 			dispatch({
 				type: 'ADD_SHIP',
-				payload: shipTypes[currentShip],
+				payload: { ship: shipTypes[currentShip], player: 'human' },
 			});
 			if (currentShip >= 4) {
 				setDismount(true);
@@ -63,7 +78,7 @@ function GameSetup({ dismount, setDismount }) {
 				style={{ animation: dismount ? 'fadeout 2s' : 'fadein 2s' }}
 			>
 				<SetupTitle>
-					{players[0].name}, Place Your {shipTypes[currentShip].name}:
+					{players.human.name}, Place Your {shipTypes[currentShip].name}:
 				</SetupTitle>
 				<AxisButton onClick={() => setAxis(axis === 'x' ? 'y' : 'x')}>
 					AXIS: {axis}

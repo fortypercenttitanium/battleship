@@ -10,10 +10,6 @@ class Gameboard {
 		}
 	}
 
-	getBoard() {
-		return this.board;
-	}
-
 	receiveShot(location) {
 		this.board[location].isShot = true;
 		// return true for hit, false for miss
@@ -54,15 +50,8 @@ class Gameboard {
 		}
 	}
 
-	placeShip(location, ship, axis) {
-		if (this.checkCollisions(this.createLocationArray(location, ship, axis))) {
-			this.createLocationArray(location, ship, axis).forEach(
-				(loc) => (this.board[loc].hasShip = ship.name)
-			);
-			return true;
-		} else {
-			return false;
-		}
+	placeRandomShip(ship) {
+		const randomAxis = () => ['x', 'y'][Math.floor(Math.random() * 2)];
 	}
 
 	opponentBoard() {

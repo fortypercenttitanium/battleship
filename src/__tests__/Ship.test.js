@@ -1,4 +1,4 @@
-import Ship from '../components/factories/shipFactory';
+import Ship from '../factories/shipFactory';
 
 describe('ship functions', () => {
 	// assign variables to avoid beforeEach scoping issues

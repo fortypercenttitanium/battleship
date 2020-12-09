@@ -33,7 +33,7 @@ function Init({ setDismount, dismount }) {
 
 		const human = new Player(name.trim());
 		const computer = new Player('Computer');
-		dispatch({ type: 'SET_PLAYERS', payload: [human, computer] });
+		dispatch({ type: 'SET_PLAYERS', payload: { human, computer } });
 
 		// this allows for the component to render with
 		// the fade out animation into the next app state

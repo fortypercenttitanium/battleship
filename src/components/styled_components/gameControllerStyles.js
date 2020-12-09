@@ -122,14 +122,26 @@ const Cell = styled.div`
 		props.highlight ? 'rgba(255, 255, 255, 0.7)' : ''};
 	&:hover {
 		background-color: ${(props) =>
-			props.highlight ? '' : 'rgba(255, 60, 60, 0.6)'};
-		cursor: ${(props) => (props.highlight ? 'pointer' : 'not-allowed')};
+			props.timeline === 'game start' && props.board === 'friendly'
+				? 'transparent'
+				: props.timeline === 'game start' && props.board === 'enemy'
+				? 'rgba(60, 255, 60, 0.6)'
+				: props.shot
+				? 'rgba(255, 60, 60, 0.6)'
+				: props.highlight
+				? ''
+				: 'rgba(255, 60, 60, 0.6)'};
+		cursor: ${(props) => props.cursor};
 	}
 `;
 
 const GameStartContainer = styled.div`
-	display: flex;
-	width: 100%;
+	display: grid;
+	grid-template-rows: 1fr 8fr;
+	grid-template-columns: 1fr 1fr;
+	grid-auto-flow: column;
+	margin-top: 3%;
+	width: 70%;
 	justify-content: center;
 	align-items: center;
 `;

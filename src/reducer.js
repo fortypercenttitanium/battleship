@@ -1,6 +1,5 @@
 const reducer = (state, action) => {
 	const { type, payload } = action;
-	const players = { ...state.players };
 	switch (type) {
 		case 'SET_TIMELINE': {
 			return {
@@ -15,20 +14,31 @@ const reducer = (state, action) => {
 			};
 		}
 		case 'ADD_SHIP': {
-			const player = players[0];
-			player.ships.push(payload);
+			const { player, ship } = payload;
+			const newState = { ...state };
+			const newShips = [...newState.players[player].ships, ship];
+			console.log('1: ', newState.players[player].ships);
+			newState.players[player].ships = newShips;
+			console.log('2: ', newState.players[player].ships);
 			return {
-				...state,
-				players,
+				...newState,
 			};
 		}
 		case 'SET_BOARD': {
-			const player = players[0];
-			console.log('payload:', payload);
-			player.gameBoard.board = payload;
+			debugger;
+			const { locationArray, player, ship } = payload;
+			const newState = { ...state };
+			const newBoard = newState.players[player].gameBoard.board.map(
+				(cell, index) => {
+					if (locationArray.includes(index)) {
+						cell.hasShip = ship.name;
+					}
+					return cell;
+				}
+			);
+			newState.players[player].gameBoard.board = newBoard;
 			return {
-				...state,
-				players,
+				...newState,
 			};
 		}
 		default:
