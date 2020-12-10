@@ -15,6 +15,7 @@ const shipTypes = [
 					start={props.start}
 					axis={props.axis}
 					ship_length={5}
+					position={props.position}
 				/>
 			);
 		},
@@ -29,6 +30,7 @@ const shipTypes = [
 					start={props.start}
 					axis={props.axis}
 					ship_length={4}
+					position={props.position}
 				/>
 			);
 		},
@@ -43,6 +45,7 @@ const shipTypes = [
 					start={props.start}
 					axis={props.axis}
 					ship_length={3}
+					position={props.position}
 				/>
 			);
 		},
@@ -57,6 +60,7 @@ const shipTypes = [
 					start={props.start}
 					axis={props.axis}
 					ship_length={3}
+					position={props.position}
 				/>
 			);
 		},
@@ -71,6 +75,7 @@ const shipTypes = [
 					start={props.start}
 					axis={props.axis}
 					ship_length={2}
+					position={props.position}
 				/>
 			);
 		},

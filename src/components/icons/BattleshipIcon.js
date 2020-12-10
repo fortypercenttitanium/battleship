@@ -2,9 +2,15 @@ import * as React from 'react';
 import ContainerDiv from './ContainerDiv';
 
 function BattleshipIcon(props) {
-	const { start, axis, ship_length } = props;
+	const { start, axis, ship_length, position } = props;
+	console.log(position);
 	return (
-		<ContainerDiv start={start} axis={axis} ship_length={ship_length}>
+		<ContainerDiv
+			start={start}
+			axis={axis}
+			ship_length={ship_length}
+			position={position}
+		>
 			<svg
 				xmlns='http://www.w3.org/2000/svg'
 				width='100%'

@@ -118,6 +118,7 @@ const Cell = styled.div`
 	height: 100%;
 	width: 100%;
 	transition: 0.3s;
+	position: ${(props) => props.position};
 	background-color: ${(props) =>
 		props.highlight ? 'rgba(255, 255, 255, 0.7)' : ''};
 	&:hover {

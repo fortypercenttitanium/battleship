@@ -1,16 +1,5 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { Cell } from '../styled_components/gameControllerStyles';
-
-// const ShotCell = styled(Cell)`
-// 	position: absolute;
-// 	text-align: center;
-// 	display: flex;
-// 	margin: auto;
-// 	&:hover {
-// 		background-color: 'transparent';
-// 	}
-// `;
 
 const ShotCell = styled.div`
 	display: flex;

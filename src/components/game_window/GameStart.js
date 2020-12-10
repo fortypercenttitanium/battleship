@@ -9,7 +9,7 @@ import ShipPlacementGrid from './ShipPlacementGrid';
 import EnemyWatersGrid from './EnemyWatersGrid';
 
 function GameStart() {
-	const { state, dispatch } = useContext(store);
+	const { state } = useContext(store);
 	const { message } = state;
 	const [hudMessage, setHudMessage] = useState('');
 

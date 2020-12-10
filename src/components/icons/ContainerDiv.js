@@ -17,4 +17,5 @@ export default styled.div`
 					Number(start.toString().charAt(start.toString().length - 1)) + 1
 			  } / span 1`;
 	}};
+	position: ${(props) => props.position};
 `;

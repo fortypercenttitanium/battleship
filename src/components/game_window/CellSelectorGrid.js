@@ -4,11 +4,10 @@ import shipTypes from '../../game_helpers/shipTypes';
 import { store } from '../../GameController';
 
 function CellSelectorGrid({ handlePlaceShip, currentShip, axis }) {
-	const { state, dispatch } = useContext(store);
-	const { timeline, turn } = state;
+	const { state } = useContext(store);
+	const { timeline } = state;
 	const player = state.players.human;
 	const playerBoard = player.gameBoard;
-	const computerBoard = state.players.computer.gameBoard;
 	const [hovered, setHovered] = useState([]);
 
 	const mouseEnterHandler = (index, board) => {
@@ -29,29 +28,8 @@ function CellSelectorGrid({ handlePlaceShip, currentShip, axis }) {
 	};
 
 	const mouseLeaveHandler = () => {
-		timeline === 'setup' && setHovered([]);
+		setHovered([]);
 		return;
-	};
-
-	const handlePlayerShot = (index) => {
-		// give time for message to populate
-		setTimeout(() => {
-			dispatch({
-				type: 'RECEIVE_SHOT',
-				payload: { player: 'computer', location: index },
-			});
-		}, 1500);
-		if (computerBoard.checkIfShotHit(index)) {
-			dispatch({
-				type: 'SET_MESSAGE',
-				payload: "You fire a shot into enemy waters ...... it's a hit!",
-			});
-		} else {
-			dispatch({
-				type: 'SET_MESSAGE',
-				payload: 'You fire a shot into enemy waters ...... and miss.',
-			});
-		}
 	};
 
 	return (
@@ -60,25 +38,13 @@ function CellSelectorGrid({ handlePlaceShip, currentShip, axis }) {
 				return (
 					<Cell
 						key={index}
-						highlight={timeline === 'setup' && hovered.includes(index)}
+						highlight={hovered.includes(index)}
 						cursor={
-							timeline === 'setup' && hovered.includes(index)
-								? 'pointer'
-								: !cell.isShot
-								? 'crosshair'
-								: 'not-allowed'
+							timeline === hovered.includes(index) ? 'pointer' : 'not-allowed'
 						}
 						timeline={timeline}
-						board={timeline === 'game-start' ? 'enemy' : ''}
-						shot={cell.isShot}
 						onClick={() => {
-							if (timeline === 'setup') {
-								handlePlaceShip(index);
-							} else {
-								if (turn === 0 && timeline === 'game start') {
-									handlePlayerShot(index);
-								}
-							}
+							handlePlaceShip(index);
 						}}
 						onMouseEnter={() => {
 							mouseEnterHandler(index, playerBoard);

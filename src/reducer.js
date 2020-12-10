@@ -17,9 +17,7 @@ function reducer(state, action) {
 			const { player, ships } = payload;
 			const newState = { ...state };
 			newState.players[player].ships = ships;
-			return {
-				...newState,
-			};
+			return { ...newState };
 		}
 		case 'SET_BOARD': {
 			const { locationArray, player, ship } = payload;
@@ -33,9 +31,7 @@ function reducer(state, action) {
 				}
 			);
 			newState.players[player].gameBoard.board = newBoard;
-			return {
-				...newState,
-			};
+			return { ...newState };
 		}
 		case 'SET_MESSAGE': {
 			return {
@@ -43,13 +39,26 @@ function reducer(state, action) {
 				message: payload,
 			};
 		}
-		case 'RECEIVE_SHOT': {
-			const { player, location } = payload;
-			const newState = { ...state };
-			newState.players[player].gameBoard.receiveShot(location);
+		case 'RESET_MESSAGE': {
 			return {
-				...newState,
+				...state,
+				message: '',
 			};
+		}
+		case 'FIRE_SHOT': {
+			const { player, location } = payload;
+			const opponent = player === 'human' ? 'computer' : 'player';
+			const newState = { ...state };
+			newState.players[player].fireShot(
+				location,
+				newState.players[opponent].gameBoard
+			);
+			return { ...newState };
+		}
+		case 'SET_TURN': {
+			const newState = { ...state };
+			newState.turn = payload;
+			return { ...newState };
 		}
 		default:
 			return state;
