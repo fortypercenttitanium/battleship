@@ -1,17 +1,40 @@
 import * as React from 'react';
+import styled from 'styled-components';
+import { Cell } from '../styled_components/gameControllerStyles';
+
+// const ShotCell = styled(Cell)`
+// 	position: absolute;
+// 	text-align: center;
+// 	display: flex;
+// 	margin: auto;
+// 	&:hover {
+// 		background-color: 'transparent';
+// 	}
+// `;
+
+const ShotCell = styled.div`
+	display: flex;
+	height: 100%;
+	width: 100%;
+	& > * {
+		margin: auto;
+	}
+`;
 
 function ShotMarker(props) {
 	const { hit } = props;
 	return (
-		<svg
-			width={48}
-			height={48}
-			fill={hit ? 'red' : 'white'}
-			xmlns='http://www.w3.org/2000/svg'
-			{...props}
-		>
-			<circle cx={24} cy={24} r={24} fill='#000' />
-		</svg>
+		<ShotCell>
+			<svg
+				width={16}
+				height={16}
+				fill={hit ? 'red' : 'white'}
+				xmlns='http://www.w3.org/2000/svg'
+				{...props}
+			>
+				<circle cx={8} cy={8} r={8} />
+			</svg>
+		</ShotCell>
 	);
 }
 

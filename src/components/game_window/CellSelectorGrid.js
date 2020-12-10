@@ -4,10 +4,11 @@ import shipTypes from '../../game_helpers/shipTypes';
 import { store } from '../../GameController';
 
 function CellSelectorGrid({ handlePlaceShip, currentShip, axis }) {
-	const { state } = useContext(store);
-	const { timeline } = state;
+	const { state, dispatch } = useContext(store);
+	const { timeline, turn } = state;
 	const player = state.players.human;
 	const playerBoard = player.gameBoard;
+	const computerBoard = state.players.computer.gameBoard;
 	const [hovered, setHovered] = useState([]);
 
 	const mouseEnterHandler = (index, board) => {
@@ -32,6 +33,27 @@ function CellSelectorGrid({ handlePlaceShip, currentShip, axis }) {
 		return;
 	};
 
+	const handlePlayerShot = (index) => {
+		// give time for message to populate
+		setTimeout(() => {
+			dispatch({
+				type: 'RECEIVE_SHOT',
+				payload: { player: 'computer', location: index },
+			});
+		}, 1500);
+		if (computerBoard.checkIfShotHit(index)) {
+			dispatch({
+				type: 'SET_MESSAGE',
+				payload: "You fire a shot into enemy waters ...... it's a hit!",
+			});
+		} else {
+			dispatch({
+				type: 'SET_MESSAGE',
+				payload: 'You fire a shot into enemy waters ...... and miss.',
+			});
+		}
+	};
+
 	return (
 		<GameBoardGrid>
 			{playerBoard.board.map((cell, index) => {
@@ -51,8 +73,11 @@ function CellSelectorGrid({ handlePlaceShip, currentShip, axis }) {
 						shot={cell.isShot}
 						onClick={() => {
 							if (timeline === 'setup') {
-								handlePlaceShip(player, index);
+								handlePlaceShip(index);
 							} else {
+								if (turn === 0 && timeline === 'game start') {
+									handlePlayerShot(index);
+								}
 							}
 						}}
 						onMouseEnter={() => {

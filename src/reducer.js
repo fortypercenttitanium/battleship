@@ -37,6 +37,20 @@ function reducer(state, action) {
 				...newState,
 			};
 		}
+		case 'SET_MESSAGE': {
+			return {
+				...state,
+				message: payload,
+			};
+		}
+		case 'RECEIVE_SHOT': {
+			const { player, location } = payload;
+			const newState = { ...state };
+			newState.players[player].gameBoard.receiveShot(location);
+			return {
+				...newState,
+			};
+		}
 		default:
 			return state;
 	}

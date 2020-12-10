@@ -2,10 +2,7 @@ import styled from 'styled-components';
 
 const FooterComponent = styled.div`
 	display: flex;
-	position: relative;
 	width: 100%;
-	margin: auto;
-	bottom: 0;
 	font-family: 'Big Shoulders Text', cursive;
 	background: rgb(126, 126, 126);
 	background: linear-gradient(
@@ -15,7 +12,7 @@ const FooterComponent = styled.div`
 		rgba(181, 181, 181, 1) 76%,
 		rgba(122, 122, 122, 1) 100%
 	);
-	padding: 0.5rem;
+	height: 4rem;
 	justify-content: center;
 	text-align: center;
 	& > :first-child {

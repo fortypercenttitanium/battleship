@@ -1,15 +1,14 @@
 import styled from 'styled-components';
 
 const HeaderComponent = styled.div`
-	margin: auto;
+	margin: 1rem auto 0;
 	display: flex;
 	overflow: hidden;
 `;
 
 const Logo = styled.img`
-	padding: 1rem 0;
 	margin: auto;
-	height: ${(props) => (props.large ? 'auto' : '7rem')};
+	height: ${(props) => (props.large ? 'auto' : '3rem')};
 	@media (max-width: 900px) {
 		height: calc(4rem + 5vw);
 	}

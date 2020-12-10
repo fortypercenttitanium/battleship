@@ -9,6 +9,8 @@ import {
 import ShipPlacementGrid from './ShipPlacementGrid';
 import CellSelectorGrid from './CellSelectorGrid';
 import shipTypes from '../../game_helpers/shipTypes';
+import placePlayerShip from '../../game_helpers/placePlayerShip';
+import placeComputerShips from '../../game_helpers/placeComputerShips';
 import { store } from '../../GameController';
 
 function GameSetup({ dismount, setDismount }) {
@@ -19,8 +21,8 @@ function GameSetup({ dismount, setDismount }) {
 	const [loading, setLoading] = useState(true);
 
 	// using a new loading state to avoid race conditions between the render
-	// and setDismount. hint: render always wins. this causes the animation to
-	// load incorrectly. this method allows the component to always render with
+	// and setDismount. this causes the animation to load incorrectly.
+	// this method allows the component to always render with
 	// the animation starting from being completely faded
 	useEffect(() => {
 		if (loading) {
@@ -34,39 +36,20 @@ function GameSetup({ dismount, setDismount }) {
 		if (dismount) dispatch({ type: 'SET_TIMELINE', payload: 'game start' });
 	};
 
-	const handlePlaceShip = (player, location) => {
-		const { gameBoard } = player;
-		const locationArray = gameBoard.createLocationArray(
+	const handlePlaceShip = (location) => {
+		placePlayerShip({
+			player: players.human,
 			location,
-			shipTypes[currentShip],
-			axis
-		);
-		if (
-			// returns true if there are NO collisions
-			gameBoard.checkCollisions(locationArray)
-		) {
-			// update board state
-			dispatch({
-				type: 'SET_BOARD',
-				payload: {
-					locationArray,
-					player: 'human',
-					ship: shipTypes[currentShip],
-				},
-			});
-			// update ship state
-			dispatch({
-				type: 'SET_SHIPS',
-				payload: {
-					ships: [...players.human.ships, shipTypes[currentShip]],
-					player: 'human',
-				},
-			});
-			if (currentShip >= 4) {
-				setDismount(true);
-			} else {
-				setCurrentShip(currentShip + 1);
-			}
+			currentShip,
+			axis,
+			dispatch,
+		});
+		if (currentShip >= 4) {
+			// Computer will place ships
+			placeComputerShips(players, dispatch);
+			setDismount(true);
+		} else {
+			setCurrentShip(currentShip + 1);
 		}
 	};
 

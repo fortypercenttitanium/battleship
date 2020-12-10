@@ -12,6 +12,9 @@ class Gameboard {
 
 	receiveShot(location) {
 		this.board[location].isShot = true;
+	}
+
+	checkIfShotHit(location) {
 		// return true for hit, false for miss
 		return this.board[location].hasShip;
 	}
@@ -50,8 +53,35 @@ class Gameboard {
 		}
 	}
 
-	placeRandomShip(ship) {
+	findRandomShipLocation(ship) {
+		// get a random axis
 		const randomAxis = () => ['x', 'y'][Math.floor(Math.random() * 2)];
+		// return a location array that will fit this ship
+		const findSuitableLocation = (axis) => {
+			const possibleLocationArrays = [];
+			for (let i = 0; i < 100 - ship.length; i++) {
+				// make every possible location the ship can exist as an array
+				let locationArray = [];
+				if (axis === 'x') {
+					for (let count = 0; count < ship.length; count++) {
+						locationArray.push(i + count);
+					}
+				} else {
+					for (let count = 0; count < ship.length; count++) {
+						locationArray.push(i + count * 10);
+					}
+				}
+				// test if this location will work, if so, push to the collection of possibilities
+				if (this.checkCollisions(locationArray)) {
+					possibleLocationArrays.push(locationArray);
+				}
+			}
+			// return a random choice
+			return possibleLocationArrays[
+				Math.floor(Math.random() * possibleLocationArrays.length)
+			];
+		};
+		return findSuitableLocation(randomAxis());
 	}
 
 	opponentBoard() {

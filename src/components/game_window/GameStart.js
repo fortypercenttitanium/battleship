@@ -1,17 +1,26 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { store } from '../../GameController';
-import { GameStartContainer } from '../styled_components/gameControllerStyles';
+import {
+	GameStartContainer,
+	HudWindow,
+	LabelContainer,
+} from '../styled_components/gameControllerStyles';
 import ShipPlacementGrid from './ShipPlacementGrid';
-import CellSelectorGrid from './CellSelectorGrid';
+import EnemyWatersGrid from './EnemyWatersGrid';
 
 function GameStart() {
 	const { state, dispatch } = useContext(store);
+	const { message } = state;
 	const [hudMessage, setHudMessage] = useState('');
+
+	// useEffect(() => {
+	// 	console.log(state.players);
+	// });
 
 	useEffect(() => {
 		// trigger type effect for messages if state changes
-		if (state.message) handleHudSet(state.message);
-	}, [state.message]);
+		if (message) handleHudSet(message);
+	}, [message]);
 
 	const handleHudSet = (message) => {
 		setHudMessage('');
@@ -28,12 +37,18 @@ function GameStart() {
 
 	return (
 		<>
-			<h1>{hudMessage}</h1>
 			<GameStartContainer>
-				<h1>Friendly waters</h1>
+				<HudWindow>
+					<p style={{ margin: 'auto' }}>{hudMessage}</p>
+				</HudWindow>
+				<LabelContainer>
+					<h1 style={{ margin: 'auto auto 0' }}>Friendly waters</h1>
+				</LabelContainer>
+				<LabelContainer>
+					<h1 style={{ margin: 'auto auto 0' }}>Enemy waters</h1>
+				</LabelContainer>
 				<ShipPlacementGrid />
-				<h1>Enemy waters</h1>
-				<CellSelectorGrid />
+				<EnemyWatersGrid />
 			</GameStartContainer>
 		</>
 	);

@@ -92,7 +92,7 @@ const GridOverlayContainer = styled.div`
 	width: 100%;
 	height: 36rem;
 	position: relative;
-	margin-bottom: 3rem;
+	margin: 2rem auto 0;
 `;
 
 const SetupGridContainer = styled.div`
@@ -105,7 +105,7 @@ const SetupGridContainer = styled.div`
 const GameBoardGrid = styled.div`
 	display: grid;
 	grid-template: repeat(10, 3rem) / repeat(10, 3rem);
-	margin: 2rem auto;
+	margin: 0 auto;
 	text-align: center;
 	gap: 2px;
 	@media (max-width: 550px) {
@@ -137,13 +137,38 @@ const Cell = styled.div`
 
 const GameStartContainer = styled.div`
 	display: grid;
-	grid-template-rows: 1fr 8fr;
+	grid-template-rows: 3rem 4rem 34rem;
 	grid-template-columns: 1fr 1fr;
-	grid-auto-flow: column;
-	margin-top: 3%;
+	margin: 2% auto;
 	width: 70%;
-	justify-content: center;
-	align-items: center;
+`;
+
+const HudWindow = styled.div`
+	display: flex;
+	margin: auto;
+	text-align: center;
+	grid-column: 1 / span 2;
+	height: 100%;
+	width: 70%;
+	border: 1px solid #ddd;
+	border-radius: 1rem;
+	background: rgb(55, 55, 55);
+	background: linear-gradient(
+		90deg,
+		rgba(55, 55, 55, 1) 0%,
+		rgba(41, 41, 41, 1) 29%,
+		rgba(41, 41, 41, 1) 76%,
+		rgba(56, 56, 56, 1) 100%
+	);
+	font-family: 'Special Elite', monospace;
+	font-size: 1.4rem;
+`;
+
+const LabelContainer = styled.div`
+	display: flex;
+	height: 100%;
+	width: 100%;
+	text-align: center;
 `;
 
 export {
@@ -158,4 +183,6 @@ export {
 	Cell,
 	GridOverlayContainer,
 	GameStartContainer,
+	HudWindow,
+	LabelContainer,
 };
