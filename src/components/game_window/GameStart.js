@@ -9,18 +9,26 @@ import EnemyWatersGrid from './EnemyWatersGrid';
 import FriendlyWatersGrid from './FriendlyWatersGrid';
 
 function GameStart() {
-	const { state } = useContext(store);
+	const { state, dispatch } = useContext(store);
 	const { message } = state;
 	const [hudMessage, setHudMessage] = useState('');
 
-	// useEffect(() => {
-	// 	console.log(state);
-	// });
+	useEffect(() => {
+		console.log(state);
+		dispatch({ type: 'SET_TURN', payload: 0 });
+	});
 
 	useEffect(() => {
 		// trigger type effect for messages if state changes
 		if (message) handleHudSet(message);
 	}, [message]);
+
+	useEffect(() => {
+		dispatch({
+			type: 'SET_MESSAGE',
+			payload: `Awaiting orders, General ${state.players.human.name}`,
+		});
+	}, [dispatch, state.players.human.name]);
 
 	const handleHudSet = (message) => {
 		setHudMessage('');

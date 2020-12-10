@@ -10,6 +10,7 @@ function GameController({ children }) {
 		players: [],
 		turn: 0,
 		message: '',
+		winner: '',
 	};
 	const [state, dispatch] = useReducer(reducer, initialState);
 	return <Provider value={{ state, dispatch }}>{children}</Provider>;

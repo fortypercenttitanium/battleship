@@ -13,25 +13,6 @@ const InitWindow = styled.div`
 	height: 100%;
 	width: 100%;
 	text-align: center;
-	@keyframes fadein {
-		0% {
-			opacity: 0;
-		}
-		70% {
-			opacity: 0;
-		}
-		100% {
-			opacity: 1;
-		}
-	}
-	@keyframes fadeout {
-		0% {
-			opacity: 1;
-		}
-		100% {
-			opacity: 0;
-		}
-	}
 `;
 
 const PlayerForm = styled.form`
@@ -57,15 +38,7 @@ const SetupWindow = styled.div`
 	display: flex;
 	text-align: center;
 	flex-direction: column;
-	animation: fadein 2s ease-in;
-	@keyframes fadein {
-		from {
-			opacity: 0;
-		}
-		to {
-			opacity: 1;
-		}
-	}
+	animation: fadeinslow 2s ease-in;
 	margin: auto;
 	width: 100%;
 `;
@@ -125,7 +98,7 @@ const Cell = styled.div`
 		background-color: ${(props) =>
 			props.timeline === 'game start' && props.board === 'friendly'
 				? 'transparent'
-				: props.timeline === 'game start' && props.board === 'enemy'
+				: props.board === 'enemy' && !props.shot
 				? 'rgba(60, 255, 60, 0.6)'
 				: props.shot
 				? 'rgba(255, 60, 60, 0.6)'

@@ -55,9 +55,7 @@ function FriendlyWatersGrid() {
 				</GameBoardGrid>
 			</SetupGridContainer>
 			<SetupGridContainer>
-				<GameBoardGrid inGame={timeline === 'game start'}>
-					{fillCells()}
-				</GameBoardGrid>
+				<GameBoardGrid>{fillCells()}</GameBoardGrid>
 			</SetupGridContainer>
 		</div>
 	);

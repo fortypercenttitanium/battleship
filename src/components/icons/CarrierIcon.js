@@ -10,7 +10,7 @@ function CarrierIcon(props) {
 				width='100%'
 				height='100%'
 				viewBox={axis === 'x' ? '0 0 299 95' : '0 0 95 299'}
-				fill={sunk === 'sunk' ? 'red' : 'skyblue'}
+				fill={sunk === 'sunk' ? 'grey' : 'skyblue'}
 				preserveAspectRatio='none'
 				{...props}
 			>

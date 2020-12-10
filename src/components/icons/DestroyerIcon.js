@@ -10,7 +10,7 @@ function DestroyerIcon(props) {
 				width='100%'
 				height='100%'
 				viewBox={axis === 'x' ? '0 0 153 69' : '0 0 69 153'}
-				fill={sunk === 'sunk' ? 'red' : 'skyblue'}
+				fill={sunk === 'sunk' ? 'grey' : 'skyblue'}
 				preserveAspectRatio='none'
 				{...props}
 			>

@@ -1,7 +1,13 @@
 import React, { useContext, useState } from 'react';
-import { GameBoardGrid, Cell } from '../styled_components/gameControllerStyles';
+import {
+	GameBoardGrid,
+	Cell,
+	SetupGridContainer,
+} from '../styled_components/gameControllerStyles';
+import findShipPlacement from '../../game_helpers/findShipPlacement';
 import ShotMarker from '../icons/ShotMarker';
 import computerTurn from '../../game_helpers/computerTurn';
+import checkWinner from '../../game_helpers/checkWinner';
 import { store } from '../../GameController';
 
 function EnemyWatersGrid() {
@@ -13,6 +19,7 @@ function EnemyWatersGrid() {
 	const playerBoard = state.players.human.gameBoard;
 
 	const handlePlayerShot = (index) => {
+		debugger;
 		if (!shotTimeout) {
 			// ignore shots while HUD is sending message
 			setShotTimeout(true);
@@ -29,10 +36,26 @@ function EnemyWatersGrid() {
 						type: 'SET_SHIP_HITS',
 						payload: { player: 'computer', ship: hitShip, hits: hitShip.hits },
 					});
-					dispatch({
-						type: 'SET_MESSAGE',
-						payload: "You fire a shot into enemy waters ...... it's a hit!",
-					});
+					if (hitShip.isSunk()) {
+						dispatch({
+							type: 'SET_MESSAGE',
+							payload: `You fire a shot into enemy waters ...... you sunk their ${hitShip.name}!`,
+						});
+						if (checkWinner(state.players)) {
+							setShotTimeout(true);
+							setTimeout(() => {
+								dispatch({
+									type: 'SET_WINNER',
+									payload: checkWinner(state.players).name,
+								});
+							}, 1500);
+						}
+					} else {
+						dispatch({
+							type: 'SET_MESSAGE',
+							payload: "You fire a shot into enemy waters ...... it's a hit!",
+						});
+					}
 				} else {
 					dispatch({
 						type: 'SET_MESSAGE',
@@ -53,35 +76,67 @@ function EnemyWatersGrid() {
 					setShotTimeout,
 					computer,
 					dispatch,
-					player: state.players.human,
+					players: state.players,
 				});
 			}, 1800);
 		}
 	};
 
+	const fillCells = () => {
+		let arr = [];
+		for (let i = 0; i < 100; i++) {
+			arr.push([i]);
+		}
+		return computerBoard.opponentBoard().map((cell, index) => {
+			return (
+				<Cell
+					key={index}
+					timeline={timeline}
+					board='enemy'
+					cursor={cell === 'empty' ? 'crosshair' : 'not-allowed'}
+					onClick={() => {
+						if (turn === 0) {
+							handlePlayerShot(index);
+						}
+					}}
+					shot={cell !== 'empty'}
+				>
+					{cell !== 'empty' && <ShotMarker hit={cell === 'hit' ? 'hit' : ''} />}
+				</Cell>
+			);
+		});
+	};
+
 	return (
-		<GameBoardGrid>
-			{computerBoard.opponentBoard().map((cell, index) => {
-				return (
-					<Cell
-						key={index}
-						cursor={cell === 'empty' ? 'crosshair' : 'not-allowed'}
-						timeline={timeline}
-						board={timeline === 'enemy'}
-						shot={cell === 'hit'}
-						onClick={() => {
-							if (turn === 0) {
-								handlePlayerShot(index);
-							}
-						}}
-					>
-						{cell !== 'empty' && (
-							<ShotMarker hit={cell === 'hit' ? 'hit' : ''} />
-						)}
-					</Cell>
-				);
-			})}
-		</GameBoardGrid>
+		<div
+			style={{
+				height: '100%',
+				width: '100%',
+				position: 'relative',
+				display: 'flex',
+			}}
+		>
+			<SetupGridContainer>
+				<GameBoardGrid>
+					{computer.ships.map((ship) => {
+						if (ship.isSunk()) {
+							const placement = findShipPlacement(ship, computerBoard.board);
+							const shipProps = {
+								start: placement.start,
+								axis: placement.axis,
+								sunk: ship.isSunk(),
+							};
+							return ship.getComponentWithProps(shipProps);
+						} else {
+							return null;
+						}
+					})}
+				</GameBoardGrid>
+			</SetupGridContainer>
+			<SetupGridContainer>
+				<GameBoardGrid>{fillCells()}</GameBoardGrid>
+			</SetupGridContainer>
+		</div>
 	);
 }
 

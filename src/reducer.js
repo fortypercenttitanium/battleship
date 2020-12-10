@@ -68,6 +68,25 @@ function reducer(state, action) {
 			newState.turn = payload;
 			return { ...newState };
 		}
+		case 'SET_WINNER': {
+			const newState = { ...state };
+			state.winner = payload;
+			return {
+				...newState,
+			};
+		}
+		case 'RESET_GAME': {
+			const initialState = {
+				timeline: 'init',
+				players: [],
+				turn: 0,
+				message: '',
+				winner: '',
+			};
+			return {
+				...initialState,
+			};
+		}
 		default:
 			return state;
 	}

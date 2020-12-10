@@ -10,7 +10,7 @@ function PatrolIcon(props) {
 				width='100%'
 				height='100%'
 				viewBox={axis === 'x' ? '0 0 112 60' : '0 0 60 112'}
-				fill={sunk === 'sunk' ? 'red' : 'skyblue'}
+				fill={sunk === 'sunk' ? 'grey' : 'skyblue'}
 				preserveAspectRatio='none'
 				{...props}
 			>
