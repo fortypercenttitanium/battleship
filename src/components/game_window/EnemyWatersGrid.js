@@ -1,6 +1,7 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import { GameBoardGrid, Cell } from '../styled_components/gameControllerStyles';
 import ShotMarker from '../icons/ShotMarker';
+import computerTurn from '../../game_helpers/computerTurn';
 import { store } from '../../GameController';
 
 function EnemyWatersGrid() {
@@ -11,51 +12,6 @@ function EnemyWatersGrid() {
 	const computerBoard = computer.gameBoard;
 	const playerBoard = state.players.human.gameBoard;
 
-	useEffect(() => {
-		if (turn === 1 && !shotTimeout) {
-			// prevent dependencies from running this multiple times
-			setShotTimeout(true);
-			// computer waits for its turn, then fires
-			setTimeout(() => {
-				dispatch({
-					type: 'SET_MESSAGE',
-					payload: 'Your opponent is aiming...',
-				});
-			}, 1500);
-
-			setTimeout(() => {
-				// create a version of the gameboard with only available shots
-				const availableShots = [];
-				playerBoard.opponentBoard().forEach((loc, index) => {
-					if (loc === 'empty') {
-						availableShots.push(index);
-					}
-				});
-				// take a random number based on array length
-				const shotLocation = Math.floor(Math.random() * availableShots.length);
-				if (playerBoard.checkIfShotHit(shotLocation)) {
-					dispatch({
-						type: 'SET_MESSAGE',
-						payload:
-							"The enemy fires a shot into your waters ...... it's a hit!",
-					});
-				} else {
-					dispatch({
-						type: 'SET_MESSAGE',
-						payload:
-							'The enemy fires a shot into your waters ...... and misses.',
-					});
-					// fire on that spot after message populates
-					setTimeout(() => {
-						dispatch({ type: 'SET_TURN', payload: 0 });
-						computer.fireShot(shotLocation, playerBoard);
-						setShotTimeout(false);
-					}, 3800);
-				}
-			}, 4000);
-		}
-	}, [computer, dispatch, playerBoard, shotTimeout, turn]);
-
 	const handlePlayerShot = (index) => {
 		if (!shotTimeout) {
 			// ignore shots while HUD is sending message
@@ -64,6 +20,15 @@ function EnemyWatersGrid() {
 			dispatch({ type: 'RESET_MESSAGE' });
 			setTimeout(() => {
 				if (computerBoard.checkIfShotHit(index)) {
+					const newShips = [...computer.ships];
+					const hitShip = newShips.find(
+						(ship) => ship.name === computerBoard.checkIfShotHit(index)
+					);
+					hitShip.hit(index);
+					dispatch({
+						type: 'SET_SHIP_HITS',
+						payload: { player: 'computer', ship: hitShip, hits: hitShip.hits },
+					});
 					dispatch({
 						type: 'SET_MESSAGE',
 						payload: "You fire a shot into enemy waters ...... it's a hit!",
@@ -83,7 +48,14 @@ function EnemyWatersGrid() {
 				});
 				setShotTimeout(false);
 				dispatch({ type: 'SET_TURN', payload: 1 });
-			}, 3800);
+				computerTurn({
+					playerBoard,
+					setShotTimeout,
+					computer,
+					dispatch,
+					player: state.players.human,
+				});
+			}, 1800);
 		}
 	};
 

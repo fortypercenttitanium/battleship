@@ -19,6 +19,14 @@ function reducer(state, action) {
 			newState.players[player].ships = ships;
 			return { ...newState };
 		}
+		case 'SET_SHIP_HITS': {
+			const { player, ship, hits } = payload;
+			const newState = { ...state };
+			newState.players[player].ships.find(
+				(item) => item.name === ship.name
+			).hits = hits;
+			return { ...newState };
+		}
 		case 'SET_BOARD': {
 			const { locationArray, player, ship } = payload;
 			const newState = { ...state };

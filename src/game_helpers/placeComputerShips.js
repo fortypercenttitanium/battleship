@@ -1,16 +1,19 @@
 import shipTypes from './shipTypes';
+import Ship from '../factories/shipFactory';
 
 function placeComputerShips(players, dispatch) {
-	shipTypes.forEach((ship) => {
+	shipTypes.forEach((arrayShip) => {
+		const ship = new Ship(
+			arrayShip.name,
+			players.computer.gameBoard.findRandomShipLocation(arrayShip)
+		);
 		// hacking an async call so dispatch will update the game state for each computer ship
 		setTimeout(() => {
 			// update board state
 			dispatch({
 				type: 'SET_BOARD',
 				payload: {
-					locationArray: players.computer.gameBoard.findRandomShipLocation(
-						ship
-					),
+					locationArray: ship.position,
 					player: 'computer',
 					ship: ship,
 				},

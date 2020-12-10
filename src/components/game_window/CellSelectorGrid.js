@@ -39,9 +39,7 @@ function CellSelectorGrid({ handlePlaceShip, currentShip, axis }) {
 					<Cell
 						key={index}
 						highlight={hovered.includes(index)}
-						cursor={
-							timeline === hovered.includes(index) ? 'pointer' : 'not-allowed'
-						}
+						cursor={hovered.includes(index) ? 'pointer' : 'not-allowed'}
 						timeline={timeline}
 						onClick={() => {
 							handlePlaceShip(index);

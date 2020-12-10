@@ -1,6 +1,8 @@
+import shipTypes from '../game_helpers/shipTypes';
+
 class Ship {
-	constructor(type, position) {
-		this.type = type;
+	constructor(name, position) {
+		this.name = name;
 		this.position = position;
 		this.hits = [];
 	}
@@ -11,6 +13,11 @@ class Ship {
 		return this.position.every((occupiedCell) =>
 			this.hits.includes(occupiedCell)
 		);
+	}
+	getComponentWithProps(props) {
+		return shipTypes
+			.find((ship) => ship.name === this.name)
+			.getComponentWithProps(props);
 	}
 }
 

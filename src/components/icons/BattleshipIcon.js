@@ -2,8 +2,7 @@ import * as React from 'react';
 import ContainerDiv from './ContainerDiv';
 
 function BattleshipIcon(props) {
-	const { start, axis, ship_length, position } = props;
-	console.log(position);
+	const { start, axis, ship_length, position, sunk } = props;
 	return (
 		<ContainerDiv
 			start={start}
@@ -16,7 +15,7 @@ function BattleshipIcon(props) {
 				width='100%'
 				height='100%'
 				viewBox={axis === 'x' ? '0 0 302 98' : '0 0 98 302'}
-				fill='skyblue'
+				fill={sunk === 'sunk' ? 'red' : 'skyblue'}
 				preserveAspectRatio='none'
 				{...props}
 			>

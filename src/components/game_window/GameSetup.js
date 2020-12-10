@@ -37,19 +37,26 @@ function GameSetup({ dismount, setDismount }) {
 	};
 
 	const handlePlaceShip = (location) => {
-		placePlayerShip({
-			player: players.human,
+		const { gameBoard } = players.human;
+		const locationArray = gameBoard.createLocationArray(
 			location,
-			currentShip,
-			axis,
-			dispatch,
-		});
-		if (currentShip >= 4) {
-			// Computer will place ships
-			placeComputerShips(players, dispatch);
-			setDismount(true);
-		} else {
-			setCurrentShip(currentShip + 1);
+			shipTypes[currentShip],
+			axis
+		);
+		if (gameBoard.checkCollisions(locationArray)) {
+			placePlayerShip({
+				player: players.human,
+				locationArray,
+				currentShip,
+				dispatch,
+			});
+			if (currentShip >= 4) {
+				// Computer will place ships
+				placeComputerShips(players, dispatch);
+				setDismount(true);
+			} else {
+				setCurrentShip(currentShip + 1);
+			}
 		}
 	};
 

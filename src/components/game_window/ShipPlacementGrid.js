@@ -21,13 +21,14 @@ function ShipPlacementGrid() {
 	};
 
 	return (
-		<GameBoardGrid inGame={timeline === 'game start'}>
+		<GameBoardGrid>
 			{ships.map((ship) => {
 				if (findShipPlacement(ship, board)) {
 					const placement = findShipPlacement(ship, board);
 					const shipProps = {
 						start: placement.start,
 						axis: placement.axis,
+						sunk: ship.isSunk(),
 					};
 					return ship.getComponentWithProps(shipProps);
 				} else {

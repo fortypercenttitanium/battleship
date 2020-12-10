@@ -32,7 +32,6 @@ class Gameboard {
 	checkCollisions(locationArray) {
 		// on x axis, if a ship shares this cell with the next, there is a wall collision
 		const collisions = [9, 19, 29, 39, 49, 59, 69, 79, 89];
-
 		if (locationArray.some((loc) => !this.board[loc])) {
 			// check if ship placement exceeds board boundaries, which covers y axis
 			return false;

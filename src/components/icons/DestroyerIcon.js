@@ -2,7 +2,7 @@ import * as React from 'react';
 import ContainerDiv from './ContainerDiv';
 
 function DestroyerIcon(props) {
-	const { start, axis, ship_length } = props;
+	const { start, axis, ship_length, sunk } = props;
 	return (
 		<ContainerDiv start={start} axis={axis} ship_length={ship_length}>
 			<svg
@@ -10,7 +10,7 @@ function DestroyerIcon(props) {
 				width='100%'
 				height='100%'
 				viewBox={axis === 'x' ? '0 0 153 69' : '0 0 69 153'}
-				fill='skyblue'
+				fill={sunk === 'sunk' ? 'red' : 'skyblue'}
 				preserveAspectRatio='none'
 				{...props}
 			>

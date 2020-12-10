@@ -5,8 +5,8 @@ import {
 	HudWindow,
 	LabelContainer,
 } from '../styled_components/gameControllerStyles';
-import ShipPlacementGrid from './ShipPlacementGrid';
 import EnemyWatersGrid from './EnemyWatersGrid';
+import FriendlyWatersGrid from './FriendlyWatersGrid';
 
 function GameStart() {
 	const { state } = useContext(store);
@@ -14,7 +14,7 @@ function GameStart() {
 	const [hudMessage, setHudMessage] = useState('');
 
 	// useEffect(() => {
-	// 	console.log(state.players);
+	// 	console.log(state);
 	// });
 
 	useEffect(() => {
@@ -32,7 +32,7 @@ function GameStart() {
 			setHudMessage(messageDisplay.join(''));
 			counter++;
 			if (counter >= messageArray.length) clearInterval(typingMessageEmulator);
-		}, 70);
+		}, 30);
 	};
 
 	return (
@@ -47,7 +47,7 @@ function GameStart() {
 				<LabelContainer>
 					<h1 style={{ margin: 'auto auto 0' }}>Enemy waters</h1>
 				</LabelContainer>
-				<ShipPlacementGrid />
+				<FriendlyWatersGrid />
 				<EnemyWatersGrid />
 			</GameStartContainer>
 		</>
