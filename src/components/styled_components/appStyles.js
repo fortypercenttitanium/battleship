@@ -9,7 +9,6 @@ const StyledApp = styled.div`
 		rgba(0, 0, 64, 1) 76%,
 		rgba(1, 0, 37, 1) 100%
 	);
-	height: 100%;
 `;
 
 const Header = styled.header`

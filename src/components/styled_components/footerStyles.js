@@ -2,8 +2,9 @@ import styled from 'styled-components';
 
 const FooterComponent = styled.div`
 	display: flex;
-	position: fixed;
+	position: relative;
 	width: 100%;
+	margin: auto;
 	bottom: 0;
 	font-family: 'Big Shoulders Text', cursive;
 	background: rgb(126, 126, 126);
