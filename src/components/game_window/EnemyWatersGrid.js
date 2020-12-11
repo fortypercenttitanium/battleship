@@ -13,7 +13,7 @@ import { store } from '../../GameController';
 
 function EnemyWatersGrid() {
 	const { state, dispatch } = useContext(store);
-	const { timeline, turn, winner } = state;
+	const { turn, winner } = state;
 	const [shotTimeout, setShotTimeout] = useState(false);
 	const computer = state.players.computer;
 	const computerBoard = computer.gameBoard;
@@ -39,6 +39,7 @@ function EnemyWatersGrid() {
 		}
 	};
 
+	// create a map to populate the grid
 	const fillCells = () => {
 		let arr = [];
 		for (let i = 0; i < 100; i++) {
@@ -48,7 +49,6 @@ function EnemyWatersGrid() {
 			return (
 				<Cell
 					key={index}
-					timeline={timeline}
 					board='enemy'
 					cursor={cell === 'empty' ? 'crosshair' : 'not-allowed'}
 					onClick={() => {

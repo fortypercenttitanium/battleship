@@ -11,11 +11,12 @@ export default function GameWindow() {
 	const { timeline, winner } = state;
 	const [dismount, setDismount] = useState(false);
 
+	// cancel animation coming into this component
 	useEffect(() => {
 		setDismount(false);
 	}, [setDismount]);
 
-	// to avoid passing a setState directly, pass these helper functions
+	// to avoid passing a setState directly, pass this helper function
 	const setDismountProp = (state) => {
 		setDismount(state);
 	};
@@ -26,11 +27,12 @@ export default function GameWindow() {
 			<Init dismount={dismount} setDismount={setDismountProp} />
 		) : timeline === 'setup' ? (
 			<GameSetup dismount={dismount} setDismount={setDismountProp} />
-		) : winner !== '' ? (
+		) : winner ? (
 			<WinnerScreen />
 		) : (
 			<GameStart setDismount={setDismount} />
 		);
 	};
+
 	return <MainWindow>{renderChild(timeline)}</MainWindow>;
 }

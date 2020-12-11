@@ -26,6 +26,7 @@ function GameStart({ setDismount }) {
 	});
 
 	useEffect(() => {
+		// set dismount animation check in case of another playthrough
 		setDismount(false);
 	}, [setDismount]);
 

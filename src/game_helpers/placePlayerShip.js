@@ -4,6 +4,7 @@ import Ship from '../factories/shipFactory';
 function placePlayerShip({ player, locationArray, currentShip, dispatch }) {
 	const { gameBoard } = player;
 	const ship = new Ship(shipTypes[currentShip].name, locationArray);
+
 	if (
 		// returns true if there are NO collisions
 		gameBoard.checkCollisions(locationArray)

@@ -1,6 +1,6 @@
-import React from 'react';
 import { FooterLinksDiv } from '../styled_components/footerStyles';
 import Github from '../logos/Github';
+import React from 'react';
 
 function FooterLinks() {
 	return (

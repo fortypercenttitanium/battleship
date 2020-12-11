@@ -4,7 +4,6 @@ import {
 	SetupTitle,
 	AxisButton,
 	GridOverlayContainer,
-	SetupGridContainer,
 } from '../styled_components/gameControllerStyles';
 import ShipPlacementGrid from './ShipPlacementGrid';
 import CellSelectorGrid from './CellSelectorGrid';
@@ -43,6 +42,7 @@ function GameSetup({ dismount, setDismount }) {
 			shipTypes[currentShip],
 			axis
 		);
+		// returns true if there are no collisions
 		if (gameBoard.checkCollisions(locationArray)) {
 			placePlayerShip({
 				player: players.human,
@@ -50,6 +50,7 @@ function GameSetup({ dismount, setDismount }) {
 				currentShip,
 				dispatch,
 			});
+			// check if this is the last ship to be placed
 			if (currentShip >= 4) {
 				// Computer will place ships
 				placeComputerShips(dispatch, state.players.computer.gameBoard);
@@ -74,17 +75,13 @@ function GameSetup({ dismount, setDismount }) {
 				</AxisButton>
 				<GridOverlayContainer>
 					{/* for ship placement */}
-
 					<ShipPlacementGrid />
-
 					{/* cells for click handlers */}
-					<SetupGridContainer>
-						<CellSelectorGrid
-							currentShip={currentShip}
-							axis={axis}
-							handlePlaceShip={handlePlaceShip}
-						/>
-					</SetupGridContainer>
+					<CellSelectorGrid
+						currentShip={currentShip}
+						axis={axis}
+						handlePlaceShip={handlePlaceShip}
+					/>
 				</GridOverlayContainer>
 			</SetupWindow>
 		)

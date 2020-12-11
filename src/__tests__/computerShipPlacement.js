@@ -1,11 +1,12 @@
-import placeComputerShips from '../game_helpers/placeComputerShips';
 import Gameboard from '../factories/gameboardFactory';
+import placeComputerShips from '../game_helpers/placeComputerShips';
 
 describe('computer ship placement', () => {
 	let state;
 	const dispatch = jest.fn((action) => {
 		const mockBoardReducer = jest.fn((payload) => {
 			const justShipsArray = payload.board.filter((cell) => cell.hasShip);
+			// if there are no collisions, the length will be 17
 			expect(justShipsArray.length).toBe(17);
 		});
 		const mockShipReducer = jest.fn((payload) => {

@@ -121,3 +121,26 @@ body {
 		opacity: 0;
 	}
 }
+@keyframes rise {
+	0% {
+		transform: translateY(100%);
+	}
+	10% {
+		transform: translateY(100%);
+	}
+	30% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(15%);
+	}
+	65% {
+		transform: translateY(0);
+	}
+	75% {
+		transform: translateY(7%);
+	}
+	90% {
+		transform: translateY(0);
+	}
+}

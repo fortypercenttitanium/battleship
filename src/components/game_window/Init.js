@@ -20,11 +20,16 @@ function Init({ setDismount, dismount }) {
 		e.preventDefault();
 
 		// remove whitespace, reject space-only names
+		// this does nothing for this function, only if there is an error
+		// and needs to rerender. the setState would occur after this function completed
 		setName(name.trim());
 
 		// can't do if(!name) because setName hasn't yet updated
 		if (!name.trim()) {
 			setError('Name required');
+			return;
+		} else if (name.length > 20) {
+			setError('Name is too long');
 			return;
 		} else {
 			//remove the error if they enter a valid name after an invalid one
@@ -62,7 +67,7 @@ function Init({ setDismount, dismount }) {
 					autoComplete='off'
 					value={name}
 				/>
-				{/* handles errors if name is invalid */}
+				{/* displays errors if name is invalid */}
 				<p style={{ color: 'red' }}>{error}</p>
 				<button type='submit'>Start game</button>
 			</PlayerForm>

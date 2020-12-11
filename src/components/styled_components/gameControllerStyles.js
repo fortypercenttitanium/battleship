@@ -18,13 +18,13 @@ const PlayerForm = styled.form`
 	display: flex;
 	font-size: 1.5rem;
 	flex-direction: column;
-	margin: auto;
+	margin: 3rem auto;
 	padding: 2rem 0;
 	& > * {
 		margin-top: 1rem;
 	}
 	& > button {
-		margin: auto;
+		margin: 1rem auto;
 		padding: 1rem;
 		cursor: pointer;
 	}

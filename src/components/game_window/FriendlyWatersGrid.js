@@ -1,4 +1,3 @@
-import React, { useContext } from 'react';
 import findShipPlacement from '../../game_helpers/findShipPlacement';
 import {
 	GameBoardGrid,
@@ -6,6 +5,7 @@ import {
 	SetupGridContainer,
 	WatersContainer,
 } from '../styled_components/gameControllerStyles';
+import React, { useContext } from 'react';
 import ShotMarker from '../icons/ShotMarker';
 import { store } from '../../GameController';
 

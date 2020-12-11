@@ -7,7 +7,6 @@ describe('player functions', () => {
 	beforeEach(() => {
 		// instantiate player
 		player = new Player('Bender Rodriguez');
-
 		// create and fill mock opponent board
 		testBoard = {
 			oppBoard: [],
@@ -38,21 +37,4 @@ describe('player functions', () => {
 		player.fireShot(10, testBoard);
 		expect(testBoard.receiveShot.mock.calls.length).toBe(1);
 	});
-
-	// this functionality was moved to the reducer
-
-	// it('can fire random shots', () => {
-	// 	player.fireRandomShot(testBoard);
-	// 	player.fireRandomShot(testBoard);
-	// 	player.fireRandomShot(testBoard);
-	// 	expect(testBoard.receiveShot.mock.calls.length).toBe(3);
-	// });
-	// it('does not fire shots on cells already shot', () => {
-	// 	for (let i = 0; i < 100; i++) {
-	// 		player.fireRandomShot(testBoard);
-	// 	}
-	// 	expect(testBoard.opponentBoard().some((cell) => cell === 'empty')).toBe(
-	// 		false
-	// 	);
-	// });
 });
