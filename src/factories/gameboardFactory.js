@@ -1,6 +1,7 @@
 class Gameboard {
 	constructor(board) {
 		this.board = board || [];
+		// allow user to pass in their own board to borrow methods for testing
 		if (!this.board.length) this.init();
 	}
 
