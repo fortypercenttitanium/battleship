@@ -69,7 +69,6 @@ function GameStart({ setDismount }) {
 				<FriendlyWatersGrid />
 				<EnemyWatersGrid />
 			</GameStartContainer>
-			<button onClick={() => dispatch({ type: 'CHEAT_CODE' })}>CHEAT</button>
 		</>
 	);
 }

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export default styled.div`
 	display: flex;
 	border: 1px solid #ddd;
+	height: 3rem;
 	grid-row: ${({ start, axis, ship_length }) => {
 		return axis === 'y'
 			? `${Math.floor(start / 10) + 1} / span ${ship_length}`

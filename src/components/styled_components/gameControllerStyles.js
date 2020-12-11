@@ -77,7 +77,10 @@ const SetupGridContainer = styled.div`
 
 const GameBoardGrid = styled.div`
 	display: grid;
-	grid-template: repeat(10, 3rem) / repeat(10, 3rem);
+	height: 30rem;
+	width: 30rem;
+	grid-template: repeat(10, 1fr) / repeat(10, 1fr);
+	/* grid-template: repeat(10, 3rem) / repeat(10, 3rem); */
 	margin: 0 auto;
 	text-align: center;
 	gap: 2px;

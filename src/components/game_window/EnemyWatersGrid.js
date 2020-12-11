@@ -7,6 +7,7 @@ import {
 import findShipPlacement from '../../game_helpers/findShipPlacement';
 import ShotMarker from '../icons/ShotMarker';
 import computerTurn from '../../game_helpers/computerTurn';
+import humanTurn from '../../game_helpers/humanTurn';
 import { store } from '../../GameController';
 
 function EnemyWatersGrid() {
@@ -23,51 +24,17 @@ function EnemyWatersGrid() {
 			setShotTimeout(true);
 			// clear message HUD
 			dispatch({ type: 'RESET_MESSAGE' });
-			setTimeout(() => {
-				if (computerBoard.checkIfShotHit(index)) {
-					const newShips = [...computer.ships];
-					const hitShip = newShips.find(
-						(ship) => ship.name === computerBoard.checkIfShotHit(index)
-					);
-					hitShip.hit(index);
-					dispatch({
-						type: 'SET_SHIP_HITS',
-						payload: { player: 'computer', ship: hitShip, hits: hitShip.hits },
-					});
-					if (hitShip.isSunk()) {
-						dispatch({
-							type: 'SET_MESSAGE',
-							payload: `You fire a shot into enemy waters ...... you sunk their ${hitShip.name}!`,
-						});
-					} else {
-						dispatch({
-							type: 'SET_MESSAGE',
-							payload: "You fire a shot into enemy waters ...... it's a hit!",
-						});
-					}
-				} else {
-					dispatch({
-						type: 'SET_MESSAGE',
-						payload: 'You fire a shot into enemy waters ...... and miss.',
-					});
-				}
-			}, 0);
-			// give time for message to populate
-			setTimeout(() => {
-				dispatch({
-					type: 'FIRE_SHOT',
-					payload: { player: 'human', location: index },
-				});
-				dispatch({ type: 'SET_TURN', payload: 1 });
-				computerTurn({
+			humanTurn(
+				{ dispatch, index, computer, computerTurn },
+				{
 					playerBoard,
 					setShotTimeout,
 					winner,
 					computer,
 					dispatch,
 					players: state.players,
-				});
-			}, 2200);
+				}
+			);
 		}
 	};
 

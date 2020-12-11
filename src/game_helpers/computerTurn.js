@@ -9,12 +9,13 @@ function computerTurn({
 	// prevent from running when locked for win conditions
 	if (!winner) {
 		// computer waits for its turn, then fires
-		// setTimeout(() => {
-		dispatch({
-			type: 'SET_MESSAGE',
-			payload: 'Your opponent is aiming...',
-		});
-		// }, 1500);
+		// a little fake immersion
+		setTimeout(() => {
+			dispatch({
+				type: 'SET_MESSAGE',
+				payload: 'Your opponent is aiming...',
+			});
+		}, 1000);
 
 		setTimeout(() => {
 			// create a version of the gameboard with only available shots
@@ -33,6 +34,7 @@ function computerTurn({
 					(ship) => ship.name === playerBoard.checkIfShotHit(shotLocation)
 				);
 				hitShip.hit(shotLocation);
+				// update hits on human ships
 				dispatch({
 					type: 'SET_SHIP_HITS',
 					payload: { player: 'human', ship: hitShip, hits: hitShip.hits },
@@ -61,7 +63,7 @@ function computerTurn({
 				dispatch({ type: 'SET_TURN', payload: 0 });
 				setShotTimeout(false);
 			}, 1800);
-		}, 2000);
+		}, 2600);
 	}
 }
 
