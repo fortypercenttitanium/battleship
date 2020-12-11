@@ -2,7 +2,11 @@ import styled from 'styled-components';
 
 const FooterComponent = styled.div`
 	display: flex;
-	width: 100%;
+	position: relative;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding: 1rem;
 	font-family: 'Big Shoulders Text', cursive;
 	background: rgb(126, 126, 126);
 	background: linear-gradient(
@@ -22,9 +26,6 @@ const FooterComponent = styled.div`
 	& > :last-child {
 		margin-right: auto;
 		padding-left: 1rem;
-	}
-	@media (max-width: 600px) {
-		display: none;
 	}
 `;
 

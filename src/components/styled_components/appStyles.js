@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 const StyledApp = styled.div`
 	display: flex;
+	position: relative;
+	width: 100%;
 	flex-direction: column;
 	background: rgb(2, 0, 36);
 	background: linear-gradient(
@@ -11,7 +13,7 @@ const StyledApp = styled.div`
 		rgba(0, 0, 64, 1) 76%,
 		rgba(1, 0, 37, 1) 100%
 	);
-	min-height: 100%;
+	overflow: auto;
 `;
 
 const Header = styled.header`
@@ -20,9 +22,9 @@ const Header = styled.header`
 
 const GameWindowContainer = styled.div`
 	display: flex;
-	overflow: auto;
+	position: relative;
 	width: 100%;
-	margin: 1rem auto;
+	margin: 1rem auto 0;
 	flex: 1;
 `;
 

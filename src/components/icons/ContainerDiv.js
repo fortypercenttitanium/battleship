@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export default styled.div`
 	display: flex;
 	border: 1px solid #ddd;
-	height: 3rem;
+	height: 100%;
 	grid-row: ${({ start, axis, ship_length }) => {
 		return axis === 'y'
 			? `${Math.floor(start / 10) + 1} / span ${ship_length}`
@@ -18,5 +18,4 @@ export default styled.div`
 					Number(start.toString().charAt(start.toString().length - 1)) + 1
 			  } / span 1`;
 	}};
-	position: ${(props) => props.position};
 `;

@@ -4,6 +4,7 @@ import {
 	GameBoardGrid,
 	Cell,
 	SetupGridContainer,
+	WatersContainer,
 } from '../styled_components/gameControllerStyles';
 import ShotMarker from '../icons/ShotMarker';
 import { store } from '../../GameController';
@@ -29,14 +30,7 @@ function FriendlyWatersGrid() {
 	};
 
 	return (
-		<div
-			style={{
-				height: '100%',
-				width: '100%',
-				position: 'relative',
-				display: 'flex',
-			}}
-		>
+		<WatersContainer row='5'>
 			<SetupGridContainer>
 				<GameBoardGrid>
 					{ships.map((ship) => {
@@ -57,7 +51,7 @@ function FriendlyWatersGrid() {
 			<SetupGridContainer>
 				<GameBoardGrid>{fillCells()}</GameBoardGrid>
 			</SetupGridContainer>
-		</div>
+		</WatersContainer>
 	);
 }
 

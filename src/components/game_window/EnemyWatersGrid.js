@@ -3,6 +3,7 @@ import {
 	GameBoardGrid,
 	Cell,
 	SetupGridContainer,
+	WatersContainer,
 } from '../styled_components/gameControllerStyles';
 import findShipPlacement from '../../game_helpers/findShipPlacement';
 import ShotMarker from '../icons/ShotMarker';
@@ -64,14 +65,7 @@ function EnemyWatersGrid() {
 	};
 
 	return (
-		<div
-			style={{
-				height: '100%',
-				width: '100%',
-				position: 'relative',
-				display: 'flex',
-			}}
-		>
+		<WatersContainer row='3'>
 			<SetupGridContainer>
 				<GameBoardGrid>
 					{computer.ships.map((ship) => {
@@ -92,7 +86,7 @@ function EnemyWatersGrid() {
 			<SetupGridContainer>
 				<GameBoardGrid>{fillCells()}</GameBoardGrid>
 			</SetupGridContainer>
-		</div>
+		</WatersContainer>
 	);
 }
 

@@ -74,9 +74,9 @@ function GameSetup({ dismount, setDismount }) {
 				</AxisButton>
 				<GridOverlayContainer>
 					{/* for ship placement */}
-					<SetupGridContainer>
-						<ShipPlacementGrid />
-					</SetupGridContainer>
+
+					<ShipPlacementGrid />
+
 					{/* cells for click handlers */}
 					<SetupGridContainer>
 						<CellSelectorGrid

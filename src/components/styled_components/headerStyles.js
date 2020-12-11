@@ -10,7 +10,7 @@ const Logo = styled.img`
 	margin: auto;
 	height: ${(props) => (props.large ? 'auto' : '3rem')};
 	@media (max-width: 900px) {
-		height: calc(4rem + 5vw);
+		height: ${(props) => (props.large ? '4rem' : '2rem')};
 	}
 	animation: rise 8s ease-out;
 	@keyframes rise {

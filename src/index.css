@@ -83,12 +83,13 @@ html {
 }
 
 body {
-	min-height: 100vh;
-	overflow: hidden;
+	display: flex;
+	min-width: 98vw;
 }
 
 #root {
-	height: 100vh;
+	display: flex;
+	width: 100%;
 	overflow: auto;
 	margin: 0;
 }

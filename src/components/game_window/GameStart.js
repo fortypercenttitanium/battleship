@@ -60,10 +60,10 @@ function GameStart({ setDismount }) {
 				<HudWindow>
 					<p style={{ margin: 'auto' }}>{hudMessage}</p>
 				</HudWindow>
-				<LabelContainer>
+				<LabelContainer row='4'>
 					<h1 style={{ margin: 'auto auto 0' }}>Friendly waters</h1>
 				</LabelContainer>
-				<LabelContainer>
+				<LabelContainer row='2'>
 					<h1 style={{ margin: 'auto auto 0' }}>Enemy waters</h1>
 				</LabelContainer>
 				<FriendlyWatersGrid />
