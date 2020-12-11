@@ -7,16 +7,27 @@ import {
 } from '../styled_components/gameControllerStyles';
 import EnemyWatersGrid from './EnemyWatersGrid';
 import FriendlyWatersGrid from './FriendlyWatersGrid';
+import checkWinner from '../../game_helpers/checkWinner';
 
-function GameStart() {
+function GameStart({ setDismount }) {
 	const { state, dispatch } = useContext(store);
 	const { message } = state;
 	const [hudMessage, setHudMessage] = useState('');
 
 	useEffect(() => {
-		console.log(state);
-		dispatch({ type: 'SET_TURN', payload: 0 });
+		if (checkWinner(state.players)) {
+			setTimeout(() => {
+				dispatch({
+					type: 'SET_WINNER',
+					payload: checkWinner(state.players).name,
+				});
+			}, 1500);
+		}
 	});
+
+	useEffect(() => {
+		setDismount(false);
+	}, [setDismount]);
 
 	useEffect(() => {
 		// trigger type effect for messages if state changes
@@ -58,6 +69,7 @@ function GameStart() {
 				<FriendlyWatersGrid />
 				<EnemyWatersGrid />
 			</GameStartContainer>
+			<button onClick={() => dispatch({ type: 'CHEAT_CODE' })}>CHEAT</button>
 		</>
 	);
 }

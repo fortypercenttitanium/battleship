@@ -7,20 +7,18 @@ import {
 import findShipPlacement from '../../game_helpers/findShipPlacement';
 import ShotMarker from '../icons/ShotMarker';
 import computerTurn from '../../game_helpers/computerTurn';
-import checkWinner from '../../game_helpers/checkWinner';
 import { store } from '../../GameController';
 
 function EnemyWatersGrid() {
 	const { state, dispatch } = useContext(store);
-	const { timeline, turn } = state;
+	const { timeline, turn, winner } = state;
 	const [shotTimeout, setShotTimeout] = useState(false);
 	const computer = state.players.computer;
 	const computerBoard = computer.gameBoard;
 	const playerBoard = state.players.human.gameBoard;
 
 	const handlePlayerShot = (index) => {
-		debugger;
-		if (!shotTimeout) {
+		if (!shotTimeout && !winner) {
 			// ignore shots while HUD is sending message
 			setShotTimeout(true);
 			// clear message HUD
@@ -41,15 +39,6 @@ function EnemyWatersGrid() {
 							type: 'SET_MESSAGE',
 							payload: `You fire a shot into enemy waters ...... you sunk their ${hitShip.name}!`,
 						});
-						if (checkWinner(state.players)) {
-							setShotTimeout(true);
-							setTimeout(() => {
-								dispatch({
-									type: 'SET_WINNER',
-									payload: checkWinner(state.players).name,
-								});
-							}, 1500);
-						}
 					} else {
 						dispatch({
 							type: 'SET_MESSAGE',
@@ -69,16 +58,16 @@ function EnemyWatersGrid() {
 					type: 'FIRE_SHOT',
 					payload: { player: 'human', location: index },
 				});
-				setShotTimeout(false);
 				dispatch({ type: 'SET_TURN', payload: 1 });
 				computerTurn({
 					playerBoard,
 					setShotTimeout,
+					winner,
 					computer,
 					dispatch,
 					players: state.players,
 				});
-			}, 1800);
+			}, 2200);
 		}
 	};
 
@@ -95,7 +84,7 @@ function EnemyWatersGrid() {
 					board='enemy'
 					cursor={cell === 'empty' ? 'crosshair' : 'not-allowed'}
 					onClick={() => {
-						if (turn === 0) {
+						if (turn === 0 && cell === 'empty') {
 							handlePlayerShot(index);
 						}
 					}}

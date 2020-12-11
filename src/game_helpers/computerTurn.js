@@ -1,23 +1,20 @@
-import checkWinner from './checkWinner';
-
 function computerTurn({
 	playerBoard,
 	setShotTimeout,
+	winner,
 	computer,
 	dispatch,
 	players,
 }) {
 	// prevent from running when locked for win conditions
-	if (!setShotTimeout) {
-		// prevent dependencies from running this multiple times
-		setShotTimeout(true);
+	if (!winner) {
 		// computer waits for its turn, then fires
 		// setTimeout(() => {
-		// 	dispatch({
-		// 		type: 'SET_MESSAGE',
-		// 		payload: 'Your opponent is aiming...',
-		// 	});
-		// }, 500);
+		dispatch({
+			type: 'SET_MESSAGE',
+			payload: 'Your opponent is aiming...',
+		});
+		// }, 1500);
 
 		setTimeout(() => {
 			// create a version of the gameboard with only available shots
@@ -45,17 +42,6 @@ function computerTurn({
 						type: 'SET_MESSAGE',
 						payload: `The enemy fires a shot into your waters ...... they sunk your ${hitShip.name}!`,
 					});
-					setTimeout(() => {
-						// allow for state refresh
-						if (checkWinner(players)) {
-							setTimeout(() => {
-								dispatch({
-									type: 'SET_WINNER',
-									payload: checkWinner(players),
-								});
-							}, 2000);
-						}
-					}, 0);
 				} else {
 					dispatch({
 						type: 'SET_MESSAGE',
@@ -74,8 +60,8 @@ function computerTurn({
 				computer.fireShot(shotLocation, playerBoard);
 				dispatch({ type: 'SET_TURN', payload: 0 });
 				setShotTimeout(false);
-			}, 100);
-		}, 0);
+			}, 1800);
+		}, 2000);
 	}
 }
 

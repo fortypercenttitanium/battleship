@@ -27,7 +27,7 @@ function reducer(state, action) {
 			).hits = hits;
 			return { ...newState };
 		}
-		case 'SET_BOARD': {
+		case 'SET_SHIP_ON_BOARD': {
 			const { locationArray, player, ship } = payload;
 			const newState = { ...state };
 			const newBoard = newState.players[player].gameBoard.board.map(
@@ -39,6 +39,12 @@ function reducer(state, action) {
 				}
 			);
 			newState.players[player].gameBoard.board = newBoard;
+			return { ...newState };
+		}
+		case 'SET_BOARD': {
+			const newState = { ...state };
+			const { player, board } = payload;
+			newState.players[player].gameBoard.board = board;
 			return { ...newState };
 		}
 		case 'SET_MESSAGE': {
@@ -86,6 +92,14 @@ function reducer(state, action) {
 			return {
 				...initialState,
 			};
+		}
+		// for testing
+		case 'CHEAT_CODE': {
+			const newState = { ...state };
+			newState.players.computer.ships.forEach(
+				(ship) => (ship.hits = ship.position)
+			);
+			return { ...newState };
 		}
 		default:
 			return state;

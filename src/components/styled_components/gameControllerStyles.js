@@ -115,6 +115,7 @@ const GameStartContainer = styled.div`
 	grid-template-columns: 1fr 1fr;
 	margin: 2% auto;
 	width: 70%;
+	animation: fadein 2s;
 `;
 
 const HudWindow = styled.div`

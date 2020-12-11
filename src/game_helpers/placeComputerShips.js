@@ -1,34 +1,35 @@
 import shipTypes from './shipTypes';
 import Ship from '../factories/shipFactory';
+import Gameboard from '../factories/gameboardFactory';
 
-function placeComputerShips(players, dispatch) {
-	// hacking an async call so dispatch will update the game state for each computer ship
-	let count = 0;
-	const setShips = setInterval(() => {
+function placeComputerShips(dispatch, gameBoard) {
+	// create a temporary board to check collisions and use single dispatch
+	const tempBoard = new Gameboard(gameBoard.board);
+	const ships = [];
+	shipTypes.forEach((shipType) => {
 		const ship = new Ship(
-			shipTypes[count].name,
-			players.computer.gameBoard.findRandomShipLocation(shipTypes[count])
+			shipType.name,
+			tempBoard.findRandomShipLocation(shipType)
 		);
-		// update board state
-		dispatch({
-			type: 'SET_BOARD',
-			payload: {
-				locationArray: ship.position,
-				player: 'computer',
-				ship: ship,
-			},
-		});
-		// update ship state
-		dispatch({
-			type: 'SET_SHIPS',
-			payload: {
-				ships: [...players.computer.ships, ship],
-				player: 'computer',
-			},
-		});
-		count++;
-		if (count >= 5) clearInterval(setShips);
-	}, 50);
+		ship.position.forEach((pos) => (tempBoard.board[pos].hasShip = ship.name));
+		ships.push(ship);
+	});
+	// update board state
+	dispatch({
+		type: 'SET_BOARD',
+		payload: {
+			player: 'computer',
+			board: tempBoard.board,
+		},
+	});
+	// update ship state
+	dispatch({
+		type: 'SET_SHIPS',
+		payload: {
+			ships,
+			player: 'computer',
+		},
+	});
 }
 
 export default placeComputerShips;

@@ -52,7 +52,7 @@ function GameSetup({ dismount, setDismount }) {
 			});
 			if (currentShip >= 4) {
 				// Computer will place ships
-				placeComputerShips(players, dispatch);
+				placeComputerShips(dispatch, state.players.computer.gameBoard);
 				setDismount(true);
 			} else {
 				setCurrentShip(currentShip + 1);

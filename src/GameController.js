@@ -7,7 +7,7 @@ const { Provider } = store;
 function GameController({ children }) {
 	const initialState = {
 		timeline: 'init',
-		players: [],
+		players: {},
 		turn: 0,
 		message: '',
 		winner: '',

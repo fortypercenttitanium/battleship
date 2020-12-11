@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Init from './Init';
 import GameSetup from './GameSetup';
 import GameStart from './GameStart';
@@ -10,6 +10,10 @@ export default function GameWindow() {
 	const { state } = useContext(store);
 	const { timeline, winner } = state;
 	const [dismount, setDismount] = useState(false);
+
+	useEffect(() => {
+		setDismount(false);
+	}, [setDismount]);
 
 	// to avoid passing a setState directly, pass these helper functions
 	const setDismountProp = (state) => {
@@ -25,7 +29,7 @@ export default function GameWindow() {
 		) : winner !== '' ? (
 			<WinnerScreen />
 		) : (
-			<GameStart />
+			<GameStart setDismount={setDismount} />
 		);
 	};
 	return <MainWindow>{renderChild(timeline)}</MainWindow>;

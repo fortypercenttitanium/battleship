@@ -10,7 +10,7 @@ function placePlayerShip({ player, locationArray, currentShip, dispatch }) {
 	) {
 		// update board state
 		dispatch({
-			type: 'SET_BOARD',
+			type: 'SET_SHIP_ON_BOARD',
 			payload: {
 				locationArray,
 				player: 'human',

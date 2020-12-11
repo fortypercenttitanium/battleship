@@ -18,36 +18,40 @@ describe('Gameboard functions', () => {
 		expect(testBoard.board[25].isShot).toBe(true);
 	});
 	it('responds to a miss', () => {
-		expect(testBoard.receiveShot(25)).toBe(false);
+		expect(testBoard.checkIfShotHit(25)).toBe(false);
 	});
 	it('confirms a hit', () => {
 		testBoard.board[25].hasShip = true;
-		expect(testBoard.receiveShot(25)).toBe(true);
+		expect(testBoard.checkIfShotHit(25)).toBe(true);
 	});
-	it('places a ship on the x axis', () => {
-		testBoard.placeShip(51, shipTypes[1], 'x');
-		expect(
-			testBoard.board.reduce((acc, cell, i) => {
-				cell.hasShip && acc.push(i);
-				return acc;
-			}, [])
-		).toEqual([51, 52, 53, 54]);
-	});
-	it('places a ship on the y axis', () => {
-		testBoard.placeShip(48, shipTypes[1], 'y');
-		expect(
-			testBoard.board.reduce((acc, cell, i) => {
-				cell.hasShip && acc.push(i);
-				return acc;
-			}, [])
-		).toEqual([48, 58, 68, 78]);
-	});
-	it('allows valid placement of ships', () => {
-		testBoard.placeShip(12, shipTypes[4], 'x');
-		expect(!!(testBoard.board[12] && testBoard.board[13])).toBe(true);
-	});
+
+	// this functionality was moved to the reducer
+
+	// it('places a ship on the x axis', () => {
+	// 	testBoard.placeShip(51, shipTypes[1], 'x');
+	// 	expect(
+	// 		testBoard.board.reduce((acc, cell, i) => {
+	// 			cell.hasShip && acc.push(i);
+	// 			return acc;
+	// 		}, [])
+	// 	).toEqual([51, 52, 53, 54]);
+	// });
+	// it('places a ship on the y axis', () => {
+	// 	testBoard.placeShip(48, shipTypes[1], 'y');
+	// 	expect(
+	// 		testBoard.board.reduce((acc, cell, i) => {
+	// 			cell.hasShip && acc.push(i);
+	// 			return acc;
+	// 		}, [])
+	// 	).toEqual([48, 58, 68, 78]);
+	// });
+	// it('allows valid placement of ships', () => {
+	// 	testBoard.placeShip(12, shipTypes[4], 'x');
+	// 	expect(!!(testBoard.board[12] && testBoard.board[13])).toBe(true);
+	// });
+
 	it('rejects ship placement that collides with other ships', () => {
-		testBoard.placeShip(12, shipTypes[2], 'x');
+		testBoard.board[12].hasShip = 'carrier';
 		expect(testBoard.checkCollisions([2, 12, 22, 32])).toBe(false);
 	});
 	it('rejects ship placement that runs through map edge on x axis', () => {
@@ -64,14 +68,17 @@ describe('Gameboard functions', () => {
 	});
 	it('renders the opponent version', () => {
 		const arr = [];
+		const testBoard = [];
 		for (let i = 0; i < 100; i++) {
 			arr.push('empty');
+			testBoard.push({ hasShip: false, isShot: false });
 		}
+		testBoard[23] = { hasShip: true, isShot: true };
+		testBoard[79] = { hasShip: false, isShot: true };
 		arr[23] = 'hit';
 		arr[79] = 'miss';
-		testBoard.placeShip(22, shipTypes[3], 'x');
-		testBoard.receiveShot(23);
-		testBoard.receiveShot(79);
-		expect(testBoard.opponentBoard()).toEqual(arr);
+		const newBoard = new Gameboard(testBoard);
+
+		expect(newBoard.opponentBoard()).toEqual(arr);
 	});
 });

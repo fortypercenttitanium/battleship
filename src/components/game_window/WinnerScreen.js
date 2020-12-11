@@ -9,7 +9,6 @@ import {
 
 function WinnerScreen() {
 	const { state, dispatch } = useContext(store);
-
 	const handleClick = () => {
 		dispatch({ type: 'RESET_GAME' });
 	};

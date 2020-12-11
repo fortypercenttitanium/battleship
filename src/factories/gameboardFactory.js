@@ -1,7 +1,7 @@
 class Gameboard {
-	constructor() {
-		this.board = [];
-		this.init();
+	constructor(board) {
+		this.board = board || [];
+		if (!this.board.length) this.init();
 	}
 
 	init() {
