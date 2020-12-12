@@ -12,7 +12,7 @@ import checkWinner from '../../game_helpers/checkWinner';
 import humanTurn from '../../game_helpers/humanTurn';
 import { store } from '../../GameController';
 
-function EnemyWatersGrid() {
+function EnemyWatersGrid({ playSound }) {
 	const { state, dispatch } = useContext(store);
 	const { turn, winner } = state;
 	const [shotTimeout, setShotTimeout] = useState(false);
@@ -28,7 +28,15 @@ function EnemyWatersGrid() {
 			// clear message HUD
 			dispatch({ type: 'RESET_MESSAGE' });
 			humanTurn(
-				{ dispatch, index, computer, computerTurn, players, checkWinner },
+				{
+					dispatch,
+					index,
+					computer,
+					computerTurn,
+					players,
+					checkWinner,
+					playSound,
+				},
 				{
 					playerBoard,
 					setShotTimeout,
@@ -36,6 +44,7 @@ function EnemyWatersGrid() {
 					computer,
 					dispatch,
 					players,
+					playSound,
 				}
 			);
 		}

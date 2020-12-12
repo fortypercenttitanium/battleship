@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-const SVG = styled.svg`
+export const SVG = styled.svg`
 	transition: 0.5s;
 	&:hover {
 		fill: black;

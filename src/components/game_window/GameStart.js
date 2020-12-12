@@ -9,7 +9,7 @@ import EnemyWatersGrid from './EnemyWatersGrid';
 import FriendlyWatersGrid from './FriendlyWatersGrid';
 import checkWinner from '../../game_helpers/checkWinner';
 
-function GameStart({ setDismount }) {
+function GameStart({ setDismount, playBgSound, playSound }) {
 	const { state, dispatch } = useContext(store);
 	const { message } = state;
 	const [hudMessage, setHudMessage] = useState('');
@@ -38,9 +38,13 @@ function GameStart({ setDismount }) {
 	useEffect(() => {
 		dispatch({
 			type: 'SET_MESSAGE',
-			payload: `Awaiting orders, General ${state.players.human.name}`,
+			payload: `Awaiting orders, Admiral ${state.players.human.name}`,
 		});
 	}, [dispatch, state.players.human.name]);
+
+	useEffect(() => {
+		playBgSound('bgSound', 0.7);
+	}, [playBgSound]);
 
 	const handleHudSet = (message) => {
 		setHudMessage('');
@@ -68,7 +72,7 @@ function GameStart({ setDismount }) {
 					<h1 style={{ margin: 'auto auto 0' }}>Enemy waters</h1>
 				</LabelContainer>
 				<FriendlyWatersGrid />
-				<EnemyWatersGrid />
+				<EnemyWatersGrid playSound={playSound} />
 			</GameStartContainer>
 		</>
 	);

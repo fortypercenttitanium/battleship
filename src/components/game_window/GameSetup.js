@@ -12,7 +12,7 @@ import placePlayerShip from '../../game_helpers/placePlayerShip';
 import placeComputerShips from '../../game_helpers/placeComputerShips';
 import { store } from '../../GameController';
 
-function GameSetup({ dismount, setDismount }) {
+function GameSetup({ dismount, setDismount, fadeOutMusic }) {
 	const { state, dispatch } = useContext(store);
 	const { players } = state;
 	const [currentShip, setCurrentShip] = useState(0);
@@ -32,7 +32,9 @@ function GameSetup({ dismount, setDismount }) {
 
 	const handleAnimationEnd = () => {
 		// allow for the fadeout
-		if (dismount) dispatch({ type: 'SET_TIMELINE', payload: 'game start' });
+		if (dismount) {
+			dispatch({ type: 'SET_TIMELINE', payload: 'game start' });
+		}
 	};
 
 	const handlePlaceShip = (location) => {
@@ -52,6 +54,7 @@ function GameSetup({ dismount, setDismount }) {
 			});
 			// check if this is the last ship to be placed
 			if (currentShip >= 4) {
+				fadeOutMusic();
 				// Computer will place ships
 				placeComputerShips(dispatch, state.players.computer.gameBoard);
 				setDismount(true);

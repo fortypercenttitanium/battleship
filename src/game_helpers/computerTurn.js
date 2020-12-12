@@ -7,7 +7,10 @@ function computerTurn({
 	computer,
 	dispatch,
 	players,
+	playSound,
 }) {
+	// initialize mutable sound variable, allow outcomes to mutate
+	let sound;
 	// prevent from running when locked for win conditions
 	if (!checkWinner(players)) {
 		// computer waits for its turn, then fires
@@ -20,9 +23,10 @@ function computerTurn({
 		}, 1000);
 
 		setTimeout(() => {
+			playSound('fireShot');
 			const shotLocation = computerAI(players.human);
-			console.log('shot loc: ', shotLocation);
 			if (playerBoard.checkIfShotHit(shotLocation)) {
+				sound = 'shotHit';
 				const newShips = { ...players.human }.ships;
 				const hitShip = newShips.find(
 					(ship) => ship.name === playerBoard.checkIfShotHit(shotLocation)
@@ -46,6 +50,7 @@ function computerTurn({
 					});
 				}
 			} else {
+				sound = 'shotMiss';
 				dispatch({
 					type: 'SET_MESSAGE',
 					payload: 'The enemy fires a shot into your waters ...... and misses.',
@@ -53,6 +58,7 @@ function computerTurn({
 			}
 			// fire on that spot after message populates
 			setTimeout(() => {
+				playSound(sound);
 				computer.fireShot(shotLocation, playerBoard);
 				dispatch({ type: 'SET_TURN', payload: 0 });
 				setShotTimeout(false);

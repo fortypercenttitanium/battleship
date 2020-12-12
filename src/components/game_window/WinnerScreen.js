@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { store } from '../../GameController';
 import {
 	WinnerContainer,
@@ -7,11 +7,15 @@ import {
 	WinnerButton,
 } from '../styled_components/winnerStyles';
 
-function WinnerScreen() {
+function WinnerScreen({ playBgSound }) {
 	const { state, dispatch } = useContext(store);
 	const handleClick = () => {
 		dispatch({ type: 'RESET_GAME' });
 	};
+
+	useEffect(() => {
+		playBgSound('music');
+	});
 
 	return (
 		<WinnerContainer>

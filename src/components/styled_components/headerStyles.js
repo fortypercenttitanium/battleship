@@ -9,7 +9,7 @@ const HeaderComponent = styled.div`
 const Logo = styled.img`
 	margin: auto;
 	height: ${(props) => (props.large ? 'auto' : '3rem')};
-	@media (max-width: 900px) {
+	@media (max-width: 1000px) {
 		height: ${(props) => (props.large ? '4rem' : '2rem')};
 	}
 	animation: rise 8s ease-out;

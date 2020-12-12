@@ -7,17 +7,6 @@ const MainWindow = styled.div`
 	text-align: center;
 `;
 
-const SoundButton = styled.button`
-	padding: 0.5rem 1rem;
-	font-size: 1rem;
-	display: flex;
-	position: absolute;
-	top: 0;
-	right: 15%;
-	background-color: ${(props) => (props.volume ? '#ddd' : '#333')};
-	color: ${(props) => (props.volume ? '#333' : '#ddd')};
-`;
-
 const InitWindow = styled.div`
 	display: flex;
 	height: 100%;
@@ -179,6 +168,17 @@ const HudWindow = styled.div`
 	}
 `;
 
+const VolumeContainer = styled.div`
+	display: flex;
+	animation: fadeinslow 5s;
+	position: absolute;
+	top: ${(props) => (props.timeline === 'init' ? '0' : '-3rem')};
+	right: ${(props) => (props.timeline === 'init' ? '' : '3rem')};
+	@media (max-width: 450px) {
+		right: ${(props) => (props.timeline === 'init' ? '' : '1.5rem')};
+	}
+`;
+
 const LabelContainer = styled.div`
 	display: flex;
 	width: 100%;
@@ -190,7 +190,6 @@ const LabelContainer = styled.div`
 
 export {
 	MainWindow,
-	SoundButton,
 	InitWindow,
 	PlayerForm,
 	SetupWindow,
@@ -204,4 +203,5 @@ export {
 	HudWindow,
 	LabelContainer,
 	WatersContainer,
+	VolumeContainer,
 };

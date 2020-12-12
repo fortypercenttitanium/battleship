@@ -12,13 +12,15 @@ import WinnerScreen from './WinnerScreen';
 import { store } from '../../GameController';
 import {
 	MainWindow,
-	SoundButton,
+	VolumeContainer,
 } from '../styled_components/gameControllerStyles';
 import music from '../../assets/sounds/music.mp3';
 import backgroundSound from '../../assets/sounds/background_sound.mp3';
 import fireShot from '../../assets/sounds/fire_shot.mp3';
 import shotHit from '../../assets/sounds/shot_hit.mp3';
 import shotMiss from '../../assets/sounds/shot_miss.mp3';
+import VolumeOn from '../icons/VolumeOn';
+import VolumeOff from '../icons/VolumeOff';
 
 export default function GameWindow() {
 	const { state } = useContext(store);
@@ -26,8 +28,18 @@ export default function GameWindow() {
 	const [dismount, setDismount] = useState(false);
 	const [volume, setVolume] = useState(true);
 
-	const soundPlayer = useRef();
+	// pass to props to avoiding directly passing a setState function
+	const setVolumeProps = (value) => {
+		value
+			? (musicPlayer.current.volume = 0.5)
+			: (musicPlayer.current.volume = 0);
+		setVolume(value);
+	};
+
 	const musicPlayer = useRef();
+	// I provide two sound players so sound effects can "overlap"
+	const soundPlayer = useRef();
+	const soundPlayer2 = useRef();
 
 	// cancel animation coming into this component
 	useEffect(() => {
@@ -39,64 +51,103 @@ export default function GameWindow() {
 		setDismount(state);
 	};
 
-	const playBgSound = useCallback((sound) => {
-		musicPlayer.current.src =
-			sound === 'music' ? music : sound === 'bgSound' ? backgroundSound : null;
-		musicPlayer.current.play();
-	}, []);
+	const playBgSound = useCallback(
+		(sound, customVolume) => {
+			if (volume) {
+				const newVol = customVolume || 0.5;
+				if (!musicPlayer.current.paused) musicPlayer.current.pause();
+				musicPlayer.current.src =
+					sound === 'music'
+						? music
+						: sound === 'bgSound'
+						? backgroundSound
+						: null;
+				musicPlayer.current.volume = newVol;
+				musicPlayer.current.play();
+			}
+		},
+		[volume]
+	);
+
+	const playSound = useCallback(
+		(sound, customVolume) => {
+			if (volume) {
+				const newVol = customVolume || 0.5;
+				let player = soundPlayer;
+				if (!soundPlayer.current.paused) {
+					player = soundPlayer2;
+				}
+				player.current.src =
+					sound === 'fireShot'
+						? fireShot
+						: sound === 'shotMiss'
+						? shotMiss
+						: sound === 'shotHit'
+						? shotHit
+						: null;
+				player.current.volume = newVol;
+				player.current.play();
+			}
+		},
+		[volume]
+	);
+
+	const checkIfMusicPaused = () => {
+		return musicPlayer.current.paused;
+	};
 
 	const fadeOutMusic = () => {
 		const fadeOut = setInterval(() => {
-			musicPlayer.current.volume = musicPlayer.current.volume - 0.01;
-			if (musicPlayer.current.volume <= 0.02) {
+			if (musicPlayer.current.volume <= 0.04) {
 				musicPlayer.current.volume = 0;
 				clearInterval(fadeOut);
+			} else {
+				musicPlayer.current.volume = musicPlayer.current.volume - 0.03;
 			}
-		}, 50);
+		}, 30);
 	};
-
-	const playSound = useCallback((sound) => {
-		soundPlayer.current.src =
-			sound === 'fireShot'
-				? fireShot
-				: sound === 'shotMiss'
-				? shotMiss
-				: sound === 'shotHit'
-				? shotHit
-				: null;
-		soundPlayer.current.play();
-	}, []);
 
 	// conditionally render based on the app state "timeline"
 	const renderChild = (timeline) => {
 		return timeline === 'init' ? (
 			<Init
 				playBgSound={playBgSound}
+				checkIfMusicPaused={checkIfMusicPaused}
 				dismount={dismount}
 				setDismount={setDismountProp}
 			/>
 		) : timeline === 'setup' ? (
-			<GameSetup dismount={dismount} setDismount={setDismountProp} />
+			<GameSetup
+				dismount={dismount}
+				fadeOutMusic={fadeOutMusic}
+				setDismount={setDismountProp}
+			/>
 		) : winner ? (
-			<WinnerScreen />
+			<WinnerScreen playBgSound={playBgSound} />
 		) : (
-			<GameStart setDismount={setDismount} />
+			<GameStart
+				playSound={playSound}
+				playBgSound={playBgSound}
+				setDismount={setDismount}
+			/>
 		);
 	};
 
 	return (
 		<MainWindow>
-			<SoundButton volume={volume} onClick={() => setVolume(!volume)}>
-				{volume ? 'Sound on' : 'Sound off'}
-			</SoundButton>
+			<VolumeContainer timeline={timeline}>
+				{volume ? (
+					<VolumeOff setVolume={setVolumeProps} />
+				) : (
+					<VolumeOn setVolume={setVolumeProps} />
+				)}
+			</VolumeContainer>
 			{renderChild(timeline)}
-			{volume && (
-				<>
-					<button onClick={() => fadeOutMusic()}>Vol</button>
-					<audio ref={musicPlayer} />
-					<audio ref={soundPlayer} />
-				</>
-			)}
+			<>
+				<audio onEnded={() => musicPlayer.current.play()} ref={musicPlayer} />
+				<audio ref={soundPlayer} />
+				<audio ref={soundPlayer2} />
+			</>
 		</MainWindow>
 	);
 }

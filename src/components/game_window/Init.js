@@ -6,7 +6,7 @@ import {
 } from '../styled_components/gameControllerStyles';
 import { store } from '../../GameController';
 
-function Init({ setDismount, dismount, playBgSound }) {
+function Init({ setDismount, dismount, playBgSound, checkIfMusicPaused }) {
 	const { dispatch } = useContext(store);
 	const [name, setName] = useState('');
 	const [error, setError] = useState('');
@@ -16,7 +16,9 @@ function Init({ setDismount, dismount, playBgSound }) {
 	};
 
 	const handleFocus = () => {
-		playBgSound('music');
+		if (checkIfMusicPaused()) {
+			playBgSound('music');
+		}
 	};
 
 	const handleSubmit = (e) => {
