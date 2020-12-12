@@ -125,7 +125,7 @@ const GameStartContainer = styled.div`
 	}
 	@media (max-width: 750px) {
 		grid-template-columns: 1fr;
-		grid-template-rows: 4rem auto 22rem auto 22rem;
+		grid-template-rows: 6rem auto 22rem auto 22rem;
 	}
 `;
 
