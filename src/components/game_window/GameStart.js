@@ -16,12 +16,12 @@ function GameStart({ setDismount, playBgSound, playSound }) {
 
 	useEffect(() => {
 		if (checkWinner(state.players)) {
-			setTimeout(() => {
-				dispatch({
-					type: 'SET_WINNER',
-					payload: checkWinner(state.players).name,
-				});
-			}, 3500);
+			// setTimeout(() => {
+			dispatch({
+				type: 'SET_WINNER',
+				payload: checkWinner(state.players).name,
+			});
+			// }, 3500);
 		}
 	});
 
