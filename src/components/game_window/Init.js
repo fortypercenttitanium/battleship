@@ -6,13 +6,17 @@ import {
 } from '../styled_components/gameControllerStyles';
 import { store } from '../../GameController';
 
-function Init({ setDismount, dismount }) {
+function Init({ setDismount, dismount, playBgSound }) {
 	const { dispatch } = useContext(store);
 	const [name, setName] = useState('');
 	const [error, setError] = useState('');
 
 	const handleChange = (e) => {
 		setName(e.target.value);
+	};
+
+	const handleFocus = () => {
+		playBgSound('music');
 	};
 
 	const handleSubmit = (e) => {
@@ -64,6 +68,7 @@ function Init({ setDismount, dismount }) {
 					id='name'
 					placeholder='Battleship combatant'
 					onChange={handleChange}
+					onFocus={handleFocus}
 					autoComplete='off'
 					value={name}
 				/>

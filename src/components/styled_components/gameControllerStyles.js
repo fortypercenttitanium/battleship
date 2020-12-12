@@ -7,6 +7,17 @@ const MainWindow = styled.div`
 	text-align: center;
 `;
 
+const SoundButton = styled.button`
+	padding: 0.5rem 1rem;
+	font-size: 1rem;
+	display: flex;
+	position: absolute;
+	top: 0;
+	right: 15%;
+	background-color: ${(props) => (props.volume ? '#ddd' : '#333')};
+	color: ${(props) => (props.volume ? '#333' : '#ddd')};
+`;
+
 const InitWindow = styled.div`
 	display: flex;
 	height: 100%;
@@ -179,6 +190,7 @@ const LabelContainer = styled.div`
 
 export {
 	MainWindow,
+	SoundButton,
 	InitWindow,
 	PlayerForm,
 	SetupWindow,
