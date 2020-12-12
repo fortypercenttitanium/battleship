@@ -21,7 +21,7 @@ function GameStart({ setDismount }) {
 					type: 'SET_WINNER',
 					payload: checkWinner(state.players).name,
 				});
-			}, 1500);
+			}, 3500);
 		}
 	});
 

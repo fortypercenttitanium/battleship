@@ -1,13 +1,15 @@
+import computerAI from './computerAI';
+
 function computerTurn({
 	playerBoard,
 	setShotTimeout,
-	winner,
+	checkWinner,
 	computer,
 	dispatch,
 	players,
 }) {
 	// prevent from running when locked for win conditions
-	if (!winner) {
+	if (!checkWinner(players)) {
 		// computer waits for its turn, then fires
 		// a little fake immersion
 		setTimeout(() => {
@@ -18,16 +20,8 @@ function computerTurn({
 		}, 1000);
 
 		setTimeout(() => {
-			// create a version of the gameboard with only available shots
-			const availableShots = [];
-			playerBoard.opponentBoard().forEach((loc, index) => {
-				if (loc === 'empty') {
-					availableShots.push(index);
-				}
-			});
-			// take a random number based on array length
-			const shotLocation =
-				availableShots[Math.floor(Math.random() * availableShots.length)];
+			const shotLocation = computerAI(players.human);
+			console.log('shot loc: ', shotLocation);
 			if (playerBoard.checkIfShotHit(shotLocation)) {
 				const newShips = { ...players.human }.ships;
 				const hitShip = newShips.find(

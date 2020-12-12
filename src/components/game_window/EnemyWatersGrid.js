@@ -8,6 +8,7 @@ import {
 import findShipPlacement from '../../game_helpers/findShipPlacement';
 import ShotMarker from '../icons/ShotMarker';
 import computerTurn from '../../game_helpers/computerTurn';
+import checkWinner from '../../game_helpers/checkWinner';
 import humanTurn from '../../game_helpers/humanTurn';
 import { store } from '../../GameController';
 
@@ -15,9 +16,10 @@ function EnemyWatersGrid() {
 	const { state, dispatch } = useContext(store);
 	const { turn, winner } = state;
 	const [shotTimeout, setShotTimeout] = useState(false);
-	const computer = state.players.computer;
+	const { players } = state;
+	const computer = players.computer;
 	const computerBoard = computer.gameBoard;
-	const playerBoard = state.players.human.gameBoard;
+	const playerBoard = players.human.gameBoard;
 
 	const handlePlayerShot = (index) => {
 		if (!shotTimeout && !winner) {
@@ -26,14 +28,14 @@ function EnemyWatersGrid() {
 			// clear message HUD
 			dispatch({ type: 'RESET_MESSAGE' });
 			humanTurn(
-				{ dispatch, index, computer, computerTurn },
+				{ dispatch, index, computer, computerTurn, players, checkWinner },
 				{
 					playerBoard,
 					setShotTimeout,
-					winner,
+					checkWinner,
 					computer,
 					dispatch,
-					players: state.players,
+					players,
 				}
 			);
 		}
