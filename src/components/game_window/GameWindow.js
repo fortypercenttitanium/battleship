@@ -62,6 +62,7 @@ export default function GameWindow() {
 						: sound === 'bgSound'
 						? backgroundSound
 						: null;
+				musicPlayer.current.load();
 				musicPlayer.current.volume = newVol;
 				musicPlayer.current.play();
 			}
@@ -85,6 +86,7 @@ export default function GameWindow() {
 						: sound === 'shotHit'
 						? shotHit
 						: null;
+				player.current.load();
 				player.current.volume = newVol;
 				player.current.play();
 			}
