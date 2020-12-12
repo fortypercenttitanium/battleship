@@ -124,13 +124,13 @@ export default function GameWindow() {
 			/>
 		) : winner ? (
 			<WinnerScreen playBgSound={playBgSound} />
-		) : (
+		) : !winner ? (
 			<GameStart
 				playSound={playSound}
 				playBgSound={playBgSound}
 				setDismount={setDismount}
 			/>
-		);
+		) : null;
 	};
 
 	return (

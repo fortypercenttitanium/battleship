@@ -76,7 +76,7 @@ function reducer(state, action) {
 		}
 		case 'SET_WINNER': {
 			const newState = { ...state };
-			state.winner = payload;
+			newState.winner = payload;
 			return {
 				...newState,
 			};
