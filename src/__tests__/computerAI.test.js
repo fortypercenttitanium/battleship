@@ -20,6 +20,7 @@ describe('computerAI', () => {
 		for (let i = 0; i < 40; i++) {
 			const shot = Math.floor(Math.random() * 100);
 			const hitShip = player.ships.find(
+				//eslint-disable-next-line
 				(ship) => ship.name === player.gameBoard.checkIfShotHit(shot)
 			);
 			if (hitShip) hitShip.hit(shot);
