@@ -83,7 +83,8 @@ class Gameboard {
 		};
 		return findSuitableLocation(randomAxis());
 	}
-
+	
+	// this returns a version of the game board that represents what the opponent is allowed to see
 	opponentBoard() {
 		return this.board.map((cell) => {
 			return cell.isShot && cell.hasShip
