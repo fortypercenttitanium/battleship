@@ -45,7 +45,7 @@ function computerAI(player) {
 			const furthestRight = detectedShip.find(
 				(cell, index, thisArray) => !thisArray.includes(cell + 1)
 			);
-			if ((furthestRight - 9) % 10 !== 10)
+			if ((furthestRight - 9) % 10 !== 0)
 				possibleShots.push(furthestRight + 1);
 		} else {
 			// add the cell above
