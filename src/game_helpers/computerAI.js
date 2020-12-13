@@ -83,7 +83,7 @@ function computerAI(player) {
 			// if this shot carries over to next row, ignore it
 			if (firstUnsunkShot % 10 === 0) {
 				return (shot - 9) % 10 !== 0 && availableShots.includes(shot);
-			} else if (firstUnsunkShot - (9 % 10) !== 0) {
+			} else if ((firstUnsunkShot - 9) % 10 === 0) {
 				return shot % 10 !== 0 && availableShots.includes(shot);
 			}
 			return availableShots.includes(shot);
