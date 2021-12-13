@@ -14,7 +14,7 @@ Some of the challenges, aside from learning Jest, included using object-oriented
 
 Another challenge was handling and rendering the SVG components correctly, in particular, flipping them for y-axis ship alignments.
 
-Devising a clever algorithm for the AI to play like a human was the final challenge, and one that proved to take more time than I anticipated. However, it was probably the most fun and reward aspect of this project.
+Devising a clever algorithm for the AI to play like a human was the final challenge, and one that proved to take more time than I anticipated. However, it was probably the most fun and rewarding aspect of this project.
 
 ## Features:
 
