@@ -1,8 +1,8 @@
 # Battleship
 
-### https://benders-battleship.netlify.app/
+## Link
 
-### https://github.com/fortypercenttitanium/battleship
+https://benders-battleship.netlify.app/
 
 #
 
